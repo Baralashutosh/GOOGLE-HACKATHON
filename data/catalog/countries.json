@@ -1,0 +1,38 @@
+[
+  {
+    "code": "IN",
+    "name": "India",
+    "locale": "hi-IN",
+    "fieldLocales": ["hi-IN", "en-IN", "bn-IN", "mr-IN", "ta-IN"],
+    "currency": "INR",
+    "admin1Label": "State",
+    "admin2Label": "District",
+    "primaryCareLabel": "PHC",
+    "lmisName": "DVDMS / e-Aushadhi",
+    "note": "Only ~52% of essential medicines available in more than 80% of primary facilities."
+  },
+  {
+    "code": "BR",
+    "name": "Brazil",
+    "locale": "pt-BR",
+    "fieldLocales": ["pt-BR"],
+    "currency": "BRL",
+    "admin1Label": "Estado",
+    "admin2Label": "Município",
+    "primaryCareLabel": "UBS",
+    "lmisName": "Hórus",
+    "note": "Shortages confirmed in 82% of 3,360 municipalities while 5-20% of publicly purchased medicines are wasted."
+  },
+  {
+    "code": "ZA",
+    "name": "South Africa",
+    "locale": "en-ZA",
+    "fieldLocales": ["en-ZA", "zu-ZA", "xh-ZA", "af-ZA"],
+    "currency": "ZAR",
+    "admin1Label": "Province",
+    "admin2Label": "District",
+    "primaryCareLabel": "Clinic",
+    "lmisName": "ePIMS / RxSolution",
+    "note": "King Cetshwayo District: stock-outs affected 85.6% of medicines while 50.6% were overstocked and 15.2% expired."
+  }
+]
