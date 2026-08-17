@@ -51,47 +51,63 @@ START_DATE = END_DATE - timedelta(days=DAYS - 1)
 DISTRICTS = {
     "IN": {
         "admin1": "Bihar",
-        "admin2": "Muzaffarpur",
-        "centre": (26.12, 85.36),
-        "spread": 0.42,
         "hemisphere": "N",
-        "blocks": [
-            "Aurai", "Bandra", "Baruraj", "Bochaha", "Gaighat", "Kanti", "Katra",
-            "Kurhani", "Marwan", "Meenapur", "Minapur", "Mushahari", "Paroo",
-            "Sahebganj", "Sakra", "Saraiya", "Motipur", "Muraul", "Dholi",
-            "Turki", "Chhapra Meghi", "Bariyarpur", "Manikpur", "Jaitpur",
+        "spread": 0.20,
+        "districts": [
+            {"name": "Muzaffarpur", "centre": (26.12, 85.36), "blocks": [
+                "Aurai", "Bandra", "Baruraj", "Bochaha", "Gaighat", "Kanti",
+                "Katra", "Kurhani", "Marwan", "Meenapur", "Mushahari", "Saraiya"]},
+            {"name": "Sitamarhi", "centre": (26.59, 85.49), "blocks": [
+                "Dumra", "Runnisaidpur", "Belsand", "Pupri", "Bathnaha", "Sonbarsa",
+                "Majorganj", "Bairgania", "Riga", "Parihar", "Nanpur", "Bajpatti"]},
+            {"name": "Vaishali", "centre": (25.68, 85.21), "blocks": [
+                "Hajipur", "Lalganj", "Mahnar", "Patepur", "Bidupur", "Raghopur",
+                "Goraul", "Jandaha", "Chehrakala", "Desri", "Sahdei Buzurg", "Bhagwanpur"]},
         ],
-        "tiers": [("warehouse", 1), ("district_hospital", 2), ("community", 6), ("primary", 24)],
+        "tiers": [("warehouse", 1), ("district_hospital", 1), ("community", 2), ("primary", 7)],
         "pop_by_tier": {"warehouse": 0, "district_hospital": 480_000, "community": 120_000, "primary": 30_000},
     },
     "BR": {
         "admin1": "Amazonas",
-        "admin2": "Manaus e Região",
-        "centre": (-3.10, -60.02),
-        "spread": 0.75,
         "hemisphere": "S",
-        "blocks": [
-            "Iranduba", "Careiro", "Manacapuru", "Rio Preto da Eva", "Autazes",
-            "Presidente Figueiredo", "Novo Airão", "Itacoatiara", "Manaquiri",
-            "Silves", "Urucurituba", "Careiro da Várzea", "Anamã", "Caapiranga",
-            "Beruri", "Borba", "Nova Olinda do Norte", "Itapiranga",
+        "spread": 0.32,
+        "districts": [
+            {"name": "Manaus", "centre": (-3.10, -60.02), "blocks": [
+                "Cidade Nova", "Compensa", "Alvorada", "São José", "Tarumã",
+                "Petrópolis", "Educandos", "Coroado", "Japiim", "Novo Aleixo",
+                "Zumbi", "Puraquequara"]},
+            {"name": "Itacoatiara", "centre": (-3.14, -58.44), "blocks": [
+                "Itacoatiara Centro", "Silves", "Urucurituba", "Nova Olinda do Norte",
+                "Itapiranga", "Autazes", "Boa Vista", "Lindóia", "Jauary",
+                "Colônia", "Mutum", "Arapapá"]},
+            {"name": "Manacapuru", "centre": (-3.30, -60.62), "blocks": [
+                "Manacapuru Centro", "Iranduba", "Careiro", "Manaquiri", "Anamã",
+                "Caapiranga", "Beruri", "Novo Airão", "Cacau Pirêra", "Paricatuba",
+                "Lago do Limão", "Costa do Pesqueiro"]},
         ],
-        "tiers": [("warehouse", 1), ("district_hospital", 1), ("community", 4), ("primary", 18)],
+        "tiers": [("warehouse", 1), ("district_hospital", 1), ("community", 2), ("primary", 7)],
         "pop_by_tier": {"warehouse": 0, "district_hospital": 520_000, "community": 95_000, "primary": 22_000},
     },
     "ZA": {
         "admin1": "KwaZulu-Natal",
-        "admin2": "King Cetshwayo",
-        "centre": (-28.75, 31.90),
-        "spread": 0.48,
         "hemisphere": "S",
-        "blocks": [
-            "Empangeni", "eSikhawini", "Ngwelezane", "Nseleni", "Richards Bay",
-            "Mtunzini", "Eshowe", "Gingindlovu", "Melmoth", "Nkandla",
-            "KwaMbonambi", "Mbonambi", "Ntambanana", "Mthonjaneni", "uMfolozi",
-            "Enseleni", "Vulindlela", "Obanjeni",
+        "spread": 0.24,
+        "districts": [
+            # The district the source study actually measured.
+            {"name": "King Cetshwayo", "centre": (-28.75, 31.90), "blocks": [
+                "Empangeni", "eSikhawini", "Ngwelezane", "Nseleni", "Richards Bay",
+                "Mtunzini", "Eshowe", "Gingindlovu", "Melmoth", "Nkandla",
+                "KwaMbonambi", "Ntambanana"]},
+            {"name": "uMkhanyakude", "centre": (-27.60, 32.30), "blocks": [
+                "Mtubatuba", "Hlabisa", "Jozini", "Ingwavuma", "Mbazwana",
+                "Manguzi", "Hluhluwe", "KwaMsane", "Nongoma Road", "Mseleni",
+                "Bhambanana", "Ndumo"]},
+            {"name": "Zululand", "centre": (-27.75, 31.40), "blocks": [
+                "Ulundi", "Nongoma", "Vryheid", "Pongola", "Babanango",
+                "Mahlabathini", "Ceza", "Hlobane", "Louwsburg", "Coronation",
+                "Emondlo", "Bloemveld"]},
         ],
-        "tiers": [("warehouse", 1), ("district_hospital", 1), ("community", 3), ("primary", 16)],
+        "tiers": [("warehouse", 1), ("district_hospital", 1), ("community", 2), ("primary", 7)],
         "pop_by_tier": {"warehouse": 0, "district_hospital": 410_000, "community": 88_000, "primary": 19_000},
     },
 }
@@ -157,38 +173,47 @@ class Facility:
 
 
 def build_facilities(rng: random.Random) -> list[Facility]:
+    """
+    Three districts per country, each a real administrative unit with its own
+    centroid. Multiple districts are not decoration: the redistribution the
+    problem statement asks for is CROSS-district, and a single-district world
+    could not demonstrate the district boundary that makes it hard.
+    """
     facilities: list[Facility] = []
     for code, cfg in DISTRICTS.items():
-        blocks = list(cfg["blocks"])
-        rng.shuffle(blocks)
-        cursor = 0
-        for tier, count in cfg["tiers"]:
-            for _ in range(count):
-                block = blocks[cursor % len(blocks)]
-                cursor += 1
-                idx = len(facilities) + 1
-                label = TIER_LABEL[code][tier]
-                name = f"{label}, {block}" if tier != "warehouse" else f"{cfg['admin2']} {label}"
-                base_pop = cfg["pop_by_tier"][tier]
-                pop = int(base_pop * rng.uniform(0.62, 1.45)) if base_pop else 0
-                # Cold chain is near-universal at the top, patchy at the bottom.
-                # That gap is a real constraint on which transfers are safe.
-                cold = {
-                    "warehouse": 1.0, "district_hospital": 1.0,
-                    "community": 0.85, "primary": 0.55,
-                }[tier]
-                facilities.append(Facility(
-                    id=f"f_{code.lower()}_{idx:03d}",
-                    name=name,
-                    country=code,
-                    tier=tier,
-                    admin1=cfg["admin1"],
-                    admin2=cfg["admin2"],
-                    lat=round(cfg["centre"][0] + rng.gauss(0, cfg["spread"] / 2.2), 5),
-                    lon=round(cfg["centre"][1] + rng.gauss(0, cfg["spread"] / 2.2), 5),
-                    populationServed=pop,
-                    hasColdChain=rng.random() < cold,
-                ))
+        for district in cfg["districts"]:
+            blocks = list(district["blocks"])
+            rng.shuffle(blocks)
+            cursor = 0
+            for tier, count in cfg["tiers"]:
+                for _ in range(count):
+                    block = blocks[cursor % len(blocks)]
+                    cursor += 1
+                    idx = len(facilities) + 1
+                    label = TIER_LABEL[code][tier]
+                    name = (f"{district['name']} {label}" if tier == "warehouse"
+                            else f"{label}, {block}")
+                    base_pop = cfg["pop_by_tier"][tier]
+                    pop = int(base_pop * rng.uniform(0.62, 1.45)) if base_pop else 0
+                    # Cold chain is near-universal at the top and patchy at the
+                    # bottom. That gap is a hard constraint on which transfers
+                    # are safe, not a preference.
+                    cold = {
+                        "warehouse": 1.0, "district_hospital": 1.0,
+                        "community": 0.85, "primary": 0.55,
+                    }[tier]
+                    facilities.append(Facility(
+                        id=f"f_{code.lower()}_{idx:03d}",
+                        name=name,
+                        country=code,
+                        tier=tier,
+                        admin1=cfg["admin1"],
+                        admin2=district["name"],
+                        lat=round(district["centre"][0] + rng.gauss(0, cfg["spread"] / 2.2), 5),
+                        lon=round(district["centre"][1] + rng.gauss(0, cfg["spread"] / 2.2), 5),
+                        populationServed=pop,
+                        hasColdChain=rng.random() < cold,
+                    ))
     return facilities
 
 

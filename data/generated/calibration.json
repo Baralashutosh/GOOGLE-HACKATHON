@@ -1,9 +1,9 @@
 {
   "source": "BMC Health Serv Res 2023, King Cetshwayo District, KwaZulu-Natal",
-  "pairs": 1125,
+  "pairs": 1350,
   "checks": {
     "medicines hit by stock-out": {
-      "simulated": 79.29,
+      "simulated": 80.15,
       "target": 85.6,
       "tol": 8.0,
       "within_tolerance": true
@@ -15,13 +15,13 @@
       "within_tolerance": true
     },
     "medicines lost to expiry": {
-      "simulated": 8.8,
+      "simulated": 8.22,
       "target": 15.2,
       "tol": 8.0,
       "within_tolerance": true
     }
   },
-  "stockout_episodes_per_facility_per_month": 2.79,
-  "mean_stockout_duration_days": 21.7,
-  "total_units_wasted": 3680023
+  "stockout_episodes_per_facility_per_month": 2.91,
+  "mean_stockout_duration_days": 21.9,
+  "total_units_wasted": 1712450
 }
