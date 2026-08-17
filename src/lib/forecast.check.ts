@@ -1,7 +1,7 @@
 /**
  * Self-check for the dual-clock engine.  Run: npm run check
  *
- * Not a test suite — one runnable thing that fails loudly if the logic that
+ * Not a test suite, one runnable thing that fails loudly if the logic that
  * the whole product rests on stops being true.
  */
 
@@ -15,8 +15,7 @@ const AS_OF = '2026-08-17';
 function history(
   drugId: string,
   days: number,
-  shape: (dayOfYear: number) => number,
-): ConsumptionPoint[] {
+  shape: (dayOfYear: number) => number): ConsumptionPoint[] {
   const end = Date.parse(AS_OF);
   const out: ConsumptionPoint[] = [];
   for (let i = days; i > 0; i--) {

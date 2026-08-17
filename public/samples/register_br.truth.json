@@ -1,0 +1,117 @@
+{
+  "country": "BR",
+  "rows": [
+    {
+      "row": 1,
+      "drugId": "d_asv",
+      "writtenName": "Soro Antiofídico Polivalente",
+      "batchNo": "A51261",
+      "expiry": "2028-03",
+      "balance": 2903
+    },
+    {
+      "row": 2,
+      "drugId": "d_salbutamol",
+      "writtenName": "Salbutamol Aerossol",
+      "batchNo": "H48931",
+      "expiry": "2027-07",
+      "balance": 0
+    },
+    {
+      "row": 3,
+      "drugId": "d_oxytocin",
+      "writtenName": "Ocitocina 5UI",
+      "batchNo": "G87533",
+      "expiry": "2026-11",
+      "balance": 3005
+    },
+    {
+      "row": 4,
+      "drugId": "d_ors",
+      "writtenName": "Sais de Reidratação Oral (SRO)",
+      "batchNo": "H13227",
+      "expiry": "2027-03",
+      "balance": 1497
+    },
+    {
+      "row": 5,
+      "drugId": "d_iron_folic",
+      "writtenName": "Sulfato Ferroso + Ácido Fólico",
+      "batchNo": "F87793",
+      "expiry": "2026-07",
+      "balance": 1987
+    },
+    {
+      "row": 6,
+      "drugId": "d_paracetamol",
+      "writtenName": "Paracetamol 500mg",
+      "batchNo": "A32342",
+      "expiry": "2026-11",
+      "balance": 1999
+    },
+    {
+      "row": 7,
+      "drugId": "d_insulin",
+      "writtenName": "Insulina Humana Regular",
+      "batchNo": "H89659",
+      "expiry": "2027-02",
+      "balance": 1298
+    },
+    {
+      "row": 8,
+      "drugId": "d_amlodipine",
+      "writtenName": "Anlodipino 5mg",
+      "batchNo": "C61224",
+      "expiry": "2026-10",
+      "balance": 1917
+    },
+    {
+      "row": 9,
+      "drugId": "d_measles_rubella",
+      "writtenName": "Vacina Dupla Viral (SR)",
+      "batchNo": "C80577",
+      "expiry": "2027-09",
+      "balance": 0
+    },
+    {
+      "row": 10,
+      "drugId": "d_magnesium_sulfate",
+      "writtenName": "Sulfato de Magnésio",
+      "batchNo": "C50100",
+      "expiry": "2027-05",
+      "balance": 5547
+    },
+    {
+      "row": 11,
+      "drugId": "d_amoxicillin",
+      "writtenName": "Amoxicilina 500mg",
+      "batchNo": "B61304",
+      "expiry": "2027-11",
+      "balance": 1743
+    },
+    {
+      "row": 12,
+      "drugId": "d_ceftriaxone",
+      "writtenName": "Ceftriaxona 1g",
+      "batchNo": "C12588",
+      "expiry": "2027-12",
+      "balance": 415
+    },
+    {
+      "row": 13,
+      "drugId": "d_rhz_fdc",
+      "writtenName": "Rifampicina + Isoniazida",
+      "batchNo": "C46937",
+      "expiry": "2027-12",
+      "balance": 480
+    },
+    {
+      "row": 14,
+      "drugId": "d_al_fdc",
+      "writtenName": "Artemeter + Lumefantrina",
+      "batchNo": "C17841",
+      "expiry": "2027-07",
+      "balance": 1047
+    }
+  ]
+}

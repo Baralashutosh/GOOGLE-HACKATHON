@@ -13,7 +13,7 @@ exactly what is real and what is modelled, so nothing on screen is taken on trus
 | Districts, administrative tiers, place names | Muzaffarpur (Bihar, IN), Manaus region (Amazonas, BR), King Cetshwayo (KwaZulu-Natal, ZA) |
 | Calibration targets | Published studies, listed below |
 
-King Cetshwayo is not an arbitrary choice — it is the district the source study measured.
+King Cetshwayo is not an arbitrary choice, it is the district the source study measured.
 
 ## What is modelled
 
@@ -25,15 +25,15 @@ mechanisms that are documented reality in public health supply chains:
 
 1. **Planners order against an annual average while demand is seasonal.** Order the
    year's mean of an antimalarial and you are short every monsoon and buried in it
-   every dry season — stocking out and expiring the same drug in the same year.
+   every dry season, stocking out and expiring the same drug in the same year.
 2. **Indents come back part-filled, or not at all** (14% unfilled). The tier above is
    itself short, or the budget line is exhausted. This, not patient demand, is what
    empties a primary health centre.
-3. **Deliveries arrive already part-way through shelf life** (20–80% remaining), so
+3. **Deliveries arrive already part-way through shelf life** (20 to 80% remaining), so
    stock that was never going to be consumed in time arrives pre-doomed.
 
-Hemispheres are modelled explicitly. India's malaria peak (Jul–Aug) lands in Brazil's
-and South Africa's trough, and vice versa — which is the arithmetic case for pooling
+Hemispheres are modelled explicitly. India's malaria peak (Jul, Aug) lands in Brazil's
+and South Africa's trough, and vice versa, which is the arithmetic case for pooling
 across BRICS rather than a rhetorical one.
 
 ## Calibration
@@ -53,15 +53,15 @@ python data/generator/generate.py
 | Mean stock-out duration | 21.7 days | 22.4 days | ditto |
 
 Note on the published episode figure: 2.3 episodes/month at 22.4 days each is per
-**facility across its whole basket**, not per medicine — 2.3 × 22.4 exceeds a month
+**facility across its whole basket**, not per medicine, 2.3 × 22.4 exceeds a month
 and cannot describe a single drug. The generator reports it on the same basis.
 
 Further context used in the pitch, not in calibration:
-- **Brazil**: shortages confirmed in 82% of 3,360 municipalities (CNM, 2022); 5–20% of
+- **Brazil**: shortages confirmed in 82% of 3,360 municipalities (CNM, 2022); 5 to 20% of
   publicly purchased medicines wasted.
 - **India**: ~52% of essential medicines available in >80% of primary facilities.
-- **WHO GHO 2010–2019**: facilities with core essential medicines available ranged
-  8%–41% across low and lower-middle income countries.
+- **WHO GHO 2010 to 2019**: facilities with core essential medicines available ranged
+  8%, 41% across low and lower-middle income countries.
 
 ## Files
 
@@ -71,5 +71,5 @@ Further context used in the pitch, not in calibration:
 | `catalog/countries.json` | yes | Country config: locales, admin tiers, national LMIS |
 | `generated/facilities.json` | yes | 78 facilities across 3 countries |
 | `generated/stock_batches.csv` | yes | Current on-hand batches with expiry |
-| `generated/calibration.json` | yes | Self-check output — the honesty receipt |
+| `generated/calibration.json` | yes | Self-check output, the honesty receipt |
 | `generated/consumption.csv` | no | ~470k rows, ~14 MB. Regenerate; it is deterministic. |

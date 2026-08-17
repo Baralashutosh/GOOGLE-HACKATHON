@@ -2,7 +2,7 @@
  * MedMesh domain model.
  *
  * One idea holds the whole system together: every medicine at every facility is
- * racing two clocks at once — the day it runs out, and the day it expires.
+ * racing two clocks at once, the day it runs out, and the day it expires.
  * Existing supply systems track neither well and compare them never. The
  * collision of those two numbers is what MedMesh acts on.
  *
@@ -51,7 +51,7 @@ export interface Facility {
 
 export interface Drug {
   id: string;
-  /** WHO ATC code — the cross-border join key. */
+  /** WHO ATC code, the cross-border join key. */
   atc: string;
   /** International Nonproprietary Name. */
   inn: string;
@@ -82,7 +82,7 @@ export interface StockBatch {
   quantity: number;
   /** ISO date. */
   expiryDate: string;
-  /** ISO date this count was last confirmed — stale counts are their own problem. */
+  /** ISO date this count was last confirmed, stale counts are their own problem. */
   lastCountedAt: string;
   /** How this count reached us. Provenance matters for trust in the number. */
   source: StockSource;
@@ -115,7 +115,7 @@ export interface RiskAssessment {
   onHand: number;
   /** Forecast mean daily offtake. */
   dailyDemand: number;
-  /** null when demand is zero — it will never run out, which is its own signal. */
+  /** null when demand is zero, it will never run out, which is its own signal. */
   daysToStockout: number | null;
   /**
    * Units projected to expire unused: stock that its own facility cannot
@@ -131,7 +131,7 @@ export interface RiskAssessment {
 }
 
 /**
- * A proposed move. Nothing here executes automatically — a human officer
+ * A proposed move. Nothing here executes automatically, a human officer
  * approves it. Redistribution fails in the field for want of permission far
  * more often than for want of arithmetic, so the rationale is part of the
  * product, not decoration.
@@ -153,7 +153,7 @@ export interface TransferProposal {
   stockoutDaysAverted: number;
   /** Units that would otherwise have expired unused. */
   wasteAvertedUnits: number;
-  /** Crosses an admin2 boundary — needs higher sign-off in most countries. */
+  /** Crosses an admin2 boundary, needs higher sign-off in most countries. */
   crossesDistrict: boolean;
   /** Plain-language justification, written by Gemini for the approving officer. */
   rationale: string;
@@ -169,6 +169,12 @@ export interface CaptureResult {
   rows: CapturedStockRow[];
   /** Raw transcript or model notes, kept for audit. */
   notes?: string;
+  /**
+   * Which model actually answered. Under load the primary steps down to a
+   * fallback, and the UI should say so rather than imply the headline model
+   * did work it did not do.
+   */
+  model?: string;
 }
 
 export interface CapturedStockRow {

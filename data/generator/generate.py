@@ -2,7 +2,7 @@
 MedMesh demo-data generator.
 
 Live facility-level stock data is not published by any BRICS health ministry, so
-this builds a simulation instead — but a simulation calibrated to peer-reviewed
+this builds a simulation instead, but a simulation calibrated to peer-reviewed
 figures rather than invented. Targets, all real:
 
   * King Cetshwayo District, KwaZulu-Natal (BMC Health Serv Res 2023):
@@ -13,12 +13,12 @@ figures rather than invented. Targets, all real:
 The pathology is not injected by hand. It falls out of one true mechanism:
 planners order against an ANNUAL AVERAGE while demand is SEASONAL. Order the
 year's mean of an antimalarial and you are short every monsoon and drowning in
-it every dry season — stocking out and expiring the same drug in the same year.
+it every dry season, stocking out and expiring the same drug in the same year.
 That is the whole thesis of MedMesh, reproduced from first principles.
 
 Hemispheres matter and are modelled: India's malaria peak (Jul-Aug) lands in
 Brazil and South Africa's trough, and vice versa. Demand moves across the map
-faster than stock does — which is precisely why pooling across BRICS works.
+faster than stock does, which is precisely why pooling across BRICS works.
 
 Run:  python data/generator/generate.py
 """
@@ -212,8 +212,7 @@ def build_facilities(rng: random.Random) -> list[Facility]:
                         lat=round(district["centre"][0] + rng.gauss(0, cfg["spread"] / 2.2), 5),
                         lon=round(district["centre"][1] + rng.gauss(0, cfg["spread"] / 2.2), 5),
                         populationServed=pop,
-                        hasColdChain=rng.random() < cold,
-                    ))
+                        hasColdChain=rng.random() < cold))
     return facilities
 
 
@@ -225,8 +224,7 @@ class Batch:
 
 
 def simulate_pair(
-    fac: Facility, drug: dict, rng: random.Random, hemisphere: str,
-) -> tuple[list[int], list[Batch], dict]:
+    fac: Facility, drug: dict, rng: random.Random, hemisphere: str) -> tuple[list[int], list[Batch], dict]:
     """
     Simulate one facility-drug over the window.
 
@@ -306,7 +304,7 @@ def simulate_pair(
             if not in_stockout:
                 episodes += 1
                 in_stockout = True
-            # An empty shelf triggers an emergency indent — but only where
+            # An empty shelf triggers an emergency indent, but only where
             # someone has the initiative and the budget line to raise one.
             # Where nobody does, the outage simply runs to the next cycle.
             if not pending and rng.random() < 0.075:
@@ -316,8 +314,7 @@ def simulate_pair(
                 if i + emergency_lead < DAYS and qty > 0:
                     pending.append((i + emergency_lead, Batch(
                         f"E{today.year % 100}{batch_seq:03d}", qty,
-                        today + timedelta(days=emergency_lead + int(shelf_days * rng.uniform(0.3, 0.8))),
-                    )))
+                        today + timedelta(days=emergency_lead + int(shelf_days * rng.uniform(0.3, 0.8))))))
         else:
             in_stockout = False
 
@@ -357,8 +354,7 @@ def simulate_pair(
                 if arrival < DAYS:
                     pending.append((arrival, Batch(
                         f"B{today.year % 100}{batch_seq:03d}", qty,
-                        today + timedelta(days=lead_time + remaining),
-                    )))
+                        today + timedelta(days=lead_time + remaining))))
 
     stats = {
         "stockout_days": stockout_days,
@@ -423,8 +419,8 @@ def main() -> None:
 
     print(f"facilities        {len(facilities)}")
     print(f"facility-drug     {len(pair_stats)}")
-    print(f"consumption rows  {len(consumption_rows):,}")
-    print(f"open batches      {len(batch_rows):,}")
+    print(f"consumption rows  {len(consumption_rows): }")
+    print(f"open batches      {len(batch_rows): }")
     print("\n--- calibration vs published figures ---")
     for k, v in report["checks"].items():
         flag = "ok " if v["within_tolerance"] else "OFF"
@@ -440,8 +436,7 @@ def calibration_report(pair_stats: list[dict]) -> dict:
     with_waste = pct(sum(1 for p in pair_stats if p["wasted_units"] > 0))
 
     months = DAYS / 30.4
-    # Published figure is per FACILITY across its whole basket, not per drug —
-    # 2.3 x 22.4 days would exceed a month for any single medicine.
+    # Published figure is per FACILITY across its whole basket, not per drug, # 2.3 x 22.4 days would exceed a month for any single medicine.
     by_facility: dict[str, int] = {}
     for p in pair_stats:
         by_facility[p["facility"]] = by_facility.get(p["facility"], 0) + p["stockout_episodes"]

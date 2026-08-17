@@ -21,7 +21,7 @@
  * permission far more often than for want of arithmetic.
  */
 
-import type { Drug, Facility, TransferProposal, RiskAssessment } from './types';
+import type { Drug, Facility, StockBatch, TransferProposal, RiskAssessment } from './types';
 import type { ExpiringLot } from './forecast';
 
 /** Straight-line km underestimates road distance; this is the usual correction. */
@@ -40,7 +40,7 @@ export interface MatchOptions {
   minTransferUnits: number;
   /** Only propose to facilities that will actually run out within this window. */
   recipientHorizonDays: number;
-  /** Allow proposals between countries — the BRICS mutual-aid tier. */
+  /** Allow proposals between countries, the BRICS mutual-aid tier. */
   allowCrossBorder: boolean;
   /**
    * Cover a donor keeps back for itself before releasing anything. The single
@@ -64,7 +64,7 @@ export interface Position {
   assessment: RiskAssessment;
   /** Lots projected to die unused. A subset of what is releasable. */
   expiringLots: ExpiringLot[];
-  /** Everything on the shelf — needed to release overstock, not just spoilage. */
+  /** Everything on the shelf, needed to release overstock, not just spoilage. */
   batches: StockBatch[];
 }
 
@@ -91,8 +91,7 @@ function releasableLots(p: Position, safetyDays: number, asOf: string): Releasab
 
   const lots: ReleasableLot[] = [];
   const sorted = [...p.batches].sort(
-    (a, b) => Date.parse(a.expiryDate) - Date.parse(b.expiryDate),
-  );
+    (a, b) => Date.parse(a.expiryDate) - Date.parse(b.expiryDate));
   for (const b of sorted) {
     if (releasable <= 0) break;
     const take = Math.min(b.quantity, releasable);
@@ -119,8 +118,7 @@ const DAY_MS = 86_400_000;
 
 /** Great-circle distance in km. */
 export function haversineKm(
-  aLat: number, aLon: number, bLat: number, bLon: number,
-): number {
+  aLat: number, aLon: number, bLat: number, bLon: number): number {
   const R = 6371;
   const dLat = ((bLat - aLat) * Math.PI) / 180;
   const dLon = ((bLon - aLon) * Math.PI) / 180;
@@ -144,7 +142,7 @@ export function travelDays(km: number): number {
  * Propose transfers across the whole mesh.
  *
  * Greedy: hardest-hit recipient first, then its nearest feasible donor. Not
- * optimal, and deliberately so — a district officer has to be able to follow
+ * optimal, and deliberately so, a district officer has to be able to follow
  * why a proposal exists, and "the clinic closest to you that has stock going to
  * waste" is a sentence. An optimal assignment that nobody trusts gets ignored,
  * which scores zero units delivered.
@@ -157,13 +155,12 @@ export function proposeTransfers(
   facilities: Map<string, Facility>,
   drugs: Map<string, Drug>,
   asOf: string,
-  options: Partial<MatchOptions> = {},
-): TransferProposal[] {
+  options: Partial<MatchOptions> = {}): TransferProposal[] {
   const opt = { ...DEFAULT_OPTIONS, ...options };
   const asOfMs = Date.parse(asOf);
   const proposals: TransferProposal[] = [];
 
-  // Group by drug — stock only ever moves within one molecule.
+  // Group by drug, stock only ever moves within one molecule.
   const byDrug = new Map<string, Position[]>();
   for (const p of positions) {
     const list = byDrug.get(p.assessment.drugId) ?? [];
@@ -200,8 +197,7 @@ export function proposeTransfers(
       // How much this facility still needs to get clear of the horizon.
       let stillNeeded = Math.ceil(
         recipient.assessment.dailyDemand * opt.recipientHorizonDays
-        - recipient.assessment.onHand,
-      );
+        - recipient.assessment.onHand);
       if (stillNeeded < opt.minTransferUnits) continue;
 
       const candidates = donorPool
@@ -234,8 +230,7 @@ export function proposeTransfers(
 
         const coverDays = qty / recipient.assessment.dailyDemand;
         const stockoutDaysAverted = Math.round(
-          Math.min(coverDays, opt.recipientHorizonDays - (recipient.assessment.daysToStockout ?? 0)),
-        );
+          Math.min(coverDays, opt.recipientHorizonDays - (recipient.assessment.daysToStockout ?? 0)));
         if (stockoutDaysAverted <= 0) continue;
 
         // Only the share of this move that was actually headed for expiry
@@ -276,7 +271,7 @@ export function proposeTransfers(
  * Rank a proposal 0-100.
  *
  * Two goods, weighted unequally on purpose. A patient turned away today is
- * worse than a carton binned next quarter, so shortage outranks waste — but
+ * worse than a carton binned next quarter, so shortage outranks waste, but
  * waste never scores zero, because if it did the surplus half of the mesh
  * would go dark and there would be nothing to match against.
  */
@@ -284,8 +279,7 @@ function scoreProposal(
   recipient: RiskAssessment,
   lotDaysToExpiry: number,
   km: number,
-  qty: number,
-): number {
+  qty: number): number {
   const shortage = recipient.urgency / 100;
   const wasteUrgency = Math.max(0, 1 - lotDaysToExpiry / 180);
   const sizeWeight = Math.min(1, qty / 500);

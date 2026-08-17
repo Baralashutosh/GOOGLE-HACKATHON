@@ -4,8 +4,7 @@
  * Every medicine at every facility is running two clocks: the day it runs out,
  * and the day it expires. Supply systems track the first badly and the second
  * not at all, and compare them never. Where the clocks collide across two
- * facilities — one about to run dry, one about to throw the same drug away —
- * there is a transfer worth making. Finding those collisions is the product.
+ * facilities, one about to run dry, one about to throw the same drug away, * there is a transfer worth making. Finding those collisions is the product.
  *
  * The forecaster is deliberately SEASON-AWARE, because season-blindness is the
  * failure it exists to correct: planners size orders from an annual average, so
@@ -151,8 +150,7 @@ export function project(
   batches: StockBatch[],
   forecast: Forecast,
   asOf: string,
-  horizonDays = HORIZON_DAYS,
-): Projection {
+  horizonDays = HORIZON_DAYS): Projection {
   const asOfDay = toDay(asOf);
 
   // Work on a copy; this is a projection, not a transaction.
@@ -166,7 +164,7 @@ export function project(
   for (let d = 0; d < horizonDays; d++) {
     const day = asOfDay + d;
 
-    // Retire lots that expired overnight — BEFORE serving, because expired
+    // Retire lots that expired overnight, BEFORE serving, because expired
     // stock cannot serve anyone. That ordering is the whole subtlety: get it
     // backwards and a shelf of dead stock reads as healthy cover.
     for (const lot of lots) {
@@ -207,8 +205,7 @@ export function assessRisk(
   drugId: string,
   batches: StockBatch[],
   forecast: Forecast,
-  asOf: string,
-): RiskAssessment {
+  asOf: string): RiskAssessment {
   const asOfDay = toDay(asOf);
   const onHand = batches.reduce((s, b) => s + b.quantity, 0);
 
@@ -237,10 +234,9 @@ function classify(
   onHand: number,
   daysToStockout: number | null,
   expiring: number,
-  daysOfCover: number,
-): RiskAssessment['status'] {
+  daysOfCover: number): RiskAssessment['status'] {
   if (onHand <= 0) return 'stocked_out';
-  // Expiry is judged as a share of the pile, not an absolute count — 200 units
+  // Expiry is judged as a share of the pile, not an absolute count, 200 units
   // dying is a rounding error in a warehouse and a scandal in a village clinic.
   if (expiring > 0 && expiring / onHand > 0.3) return 'expiring_unused';
   if (daysToStockout !== null && daysToStockout <= 30) return 'critical';
@@ -252,15 +248,14 @@ function classify(
  * One number to sort a district officer's morning queue by.
  *
  * Both ends of the scale are failures, so both score. Imminent emptiness
- * outranks imminent waste — a patient turned away today is worse than stock
- * binned next quarter — but waste never scores zero, which is what makes the
+ * outranks imminent waste, a patient turned away today is worse than stock
+ * binned next quarter, but waste never scores zero, which is what makes the
  * surplus side of the mesh visible at all.
  */
 function urgencyScore(
   daysToStockout: number | null,
   expiring: number,
-  onHand: number,
-): number {
+  onHand: number): number {
   let score = 0;
   if (daysToStockout !== null) {
     score += 70 * Math.max(0, 1 - daysToStockout / 90);

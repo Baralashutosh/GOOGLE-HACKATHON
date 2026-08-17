@@ -1,0 +1,20 @@
+[
+  {
+    "country": "IN",
+    "image": "/samples/register_in.jpg",
+    "truth": "/samples/register_in.truth.json",
+    "rows": 14
+  },
+  {
+    "country": "BR",
+    "image": "/samples/register_br.jpg",
+    "truth": "/samples/register_br.truth.json",
+    "rows": 14
+  },
+  {
+    "country": "ZA",
+    "image": "/samples/register_za.jpg",
+    "truth": "/samples/register_za.truth.json",
+    "rows": 14
+  }
+]

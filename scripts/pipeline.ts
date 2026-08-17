@@ -21,7 +21,7 @@ const key = (f: string, d: string) => `${f}|${d}`;
 
 function readCsv(path: string): string[][] {
   const text = readFileSync(path, 'utf8').trim();
-  const [, ...rows] = text.split('\n');
+  const [, ...rows] = text.split('\n');   // drop the header line
   return rows.map((r) => r.trim().split(','));
 }
 
@@ -80,7 +80,7 @@ const domestic = proposeTransfers(positions, facilityMap, drugMap, AS_OF);
  * Facility-to-facility across 15,000km is not logistics, it is a slide. What is
  * real is NATIONAL pooling: one country's surplus of a molecule against
  * another's shortfall of the same molecule, joined on ATC code. Hemispheres
- * make this more than rhetoric — India's malaria peak is Brazil's trough, six
+ * make this more than rhetoric, India's malaria peak is Brazil's trough, six
  * months out of phase, so the surpluses genuinely sit on opposite sides of the
  * calendar.
  */
@@ -161,8 +161,7 @@ for (const p of domestic.slice(0, 6)) {
     `  [${String(p.score).padStart(3)}] ${p.quantity.toLocaleString().padStart(7)} x ${d.inn}`
     + `\n        ${from.name} (${from.admin2})  ->  ${to.name} (${to.admin2})`
     + `\n        ${p.distanceKm}km, batch ${p.batchNo} expires ${p.expiryDate},`
-    + ` averts ${p.stockoutDaysAverted} stockout-days`,
-  );
+    + ` averts ${p.stockoutDaysAverted} stockout-days`);
 }
 
 writeFileSync(join(GEN, 'mesh_output.json'), JSON.stringify({
