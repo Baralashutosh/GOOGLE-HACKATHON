@@ -362,12 +362,26 @@ export async function writeRationale(facts: {
   expiryDate: string;
   stockoutDaysAverted: number;
   crossesDistrict: boolean;
-  recipientDaysToStockout: number | null;
+  /**
+   * Already phrased, not a raw count. Passing 0 produced "faces 0 days to
+   * stockout", which reads as a broken field rather than the emergency it
+   * actually describes: the shelf is empty today.
+   */
+  recipientPosition: string;
 }): Promise<string> {
   const { text } = await generate(RATIONALE_MODEL, {
-    contents: `Write ONE sentence, maximum 32 words, for a district health officer
-deciding whether to approve this medicine transfer. Plain language, no jargon,
-no greeting. Lead with the consequence of doing nothing. Use only these facts:
+    contents: `Write ONE sentence, maximum 34 words, briefing a district health
+officer who is deciding whether to approve this medicine transfer.
+
+Rules:
+- Lead with what happens if nobody acts. That is the reason the transfer exists.
+- Third person, stating the situation. Never first person. You are not the
+  officer and must not say "I approve", "I recommend" or "we should".
+- Plain language a non-clinician reads once and understands. No greeting, no
+  jargon, no closing.
+- Use only the facts given. Invent nothing, round nothing.
+
+Facts:
 
 ${JSON.stringify(facts, null, 2)}`,
     config: { temperature: 0.3, maxOutputTokens: 24000 },

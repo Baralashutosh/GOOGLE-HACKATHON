@@ -178,6 +178,9 @@ writeFileSync(join(GEN, 'mesh_output.json'), JSON.stringify({
   },
   bricsPooling: brics,
   proposals: domestic,
+  // Every facility-drug position, so the console can show the state of the
+  // network and not just the transfers that came out of it.
+  assessments: positions.map((p) => p.assessment),
 }, null, 2));
 console.log('\nwrote data/generated/mesh_output.json');
 

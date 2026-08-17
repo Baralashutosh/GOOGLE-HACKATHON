@@ -1,26 +1,211 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  MedMesh design system.
+
+  This gets shown to health ministers and international delegates, so it is
+  built to read as an operations console rather than a product launch page:
+  dense, precise, quiet. Colour carries meaning and nothing else, which is why
+  there is no decorative palette here. Every hue below is a state a medicine can
+  be in.
+*/
+
+@theme {
+  /* Ground. Near-black with a blue cast, so the signal colours stay legible
+     without vibrating against it the way they do on pure black. */
+  --color-ink-950: #070a12;
+  --color-ink-900: #0b0f1a;
+  --color-ink-850: #101623;
+  --color-ink-800: #161d2e;
+  --color-ink-700: #1f2839;
+  --color-ink-600: #2c3850;
+  --color-ink-400: #64748b;
+  --color-ink-300: #94a3b8;
+  --color-ink-200: #cbd5e1;
+  --color-ink-100: #e8eef7;
+
+  /* The two clocks. These are the only two colours that carry the argument:
+     one for running out, one for running down the calendar. */
+  --color-shortage: #ff4d5e;
+  --color-shortage-dim: #7f1d28;
+  --color-expiry: #f5a524;
+  --color-expiry-dim: #7c4a08;
+
+  /* Resolution: a transfer that closes the gap. */
+  --color-flow: #2dd4a7;
+  --color-flow-dim: #0b5745;
+
+  --color-calm: #3b82f6;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, "SF Mono", monospace;
+
+  --animate-pulse-ring: pulse-ring 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-rise: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-draw: draw 1.4s ease-out both;
+  --animate-shimmer: shimmer 2.4s linear infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes pulse-ring {
+  0% { transform: scale(0.75); opacity: 0.85; }
+  70% { transform: scale(2.4); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Transfer arcs draw themselves along the route rather than fading in, so the
+   eye follows the direction the medicine actually travels. */
+@keyframes draw {
+  from { stroke-dashoffset: var(--dash, 400); }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+
+@keyframes count-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink-950);
+  color: var(--color-ink-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numbers are the argument, so they get a face where digits align in columns
+   and a 3 can never be mistaken for an 8 at a glance from the back of a room. */
+.tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.rule {
+  border-color: color-mix(in oklab, var(--color-ink-600) 55%, transparent);
+}
+
+/* Panel: the base surface everything sits on. */
+.panel {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--color-ink-850) 92%, transparent),
+    color-mix(in oklab, var(--color-ink-900) 96%, transparent)
+  );
+  border: 1px solid color-mix(in oklab, var(--color-ink-600) 45%, transparent);
+  border-radius: 14px;
+}
+
+.panel-hover {
+  transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+.panel-hover:hover {
+  border-color: color-mix(in oklab, var(--color-flow) 45%, transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px -18px color-mix(in oklab, var(--color-flow) 60%, transparent);
+}
+
+/* Status pill. One class, state set by data attribute, so a status can never
+   be styled one way in the queue and another on the map. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.pill[data-state="stocked_out"] {
+  color: var(--color-shortage);
+  background: color-mix(in oklab, var(--color-shortage) 14%, transparent);
+  border-color: color-mix(in oklab, var(--color-shortage) 38%, transparent);
+}
+.pill[data-state="critical"] {
+  color: #ffa08c;
+  background: color-mix(in oklab, var(--color-shortage) 10%, transparent);
+  border-color: color-mix(in oklab, var(--color-shortage) 26%, transparent);
+}
+.pill[data-state="expiring_unused"] {
+  color: var(--color-expiry);
+  background: color-mix(in oklab, var(--color-expiry) 13%, transparent);
+  border-color: color-mix(in oklab, var(--color-expiry) 36%, transparent);
+}
+.pill[data-state="surplus"] {
+  color: #d6b25e;
+  background: color-mix(in oklab, var(--color-expiry) 8%, transparent);
+  border-color: color-mix(in oklab, var(--color-expiry) 22%, transparent);
+}
+.pill[data-state="adequate"] {
+  color: var(--color-ink-300);
+  background: color-mix(in oklab, var(--color-ink-400) 12%, transparent);
+  border-color: color-mix(in oklab, var(--color-ink-400) 26%, transparent);
+}
+.pill[data-state="flow"] {
+  color: var(--color-flow);
+  background: color-mix(in oklab, var(--color-flow) 12%, transparent);
+  border-color: color-mix(in oklab, var(--color-flow) 34%, transparent);
+}
+
+/* Stagger helper: children rise in sequence instead of all at once. */
+.stagger > * {
+  animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.02s; }
+.stagger > *:nth-child(2) { animation-delay: 0.07s; }
+.stagger > *:nth-child(3) { animation-delay: 0.12s; }
+.stagger > *:nth-child(4) { animation-delay: 0.17s; }
+.stagger > *:nth-child(5) { animation-delay: 0.22s; }
+.stagger > *:nth-child(6) { animation-delay: 0.27s; }
+.stagger > *:nth-child(7) { animation-delay: 0.32s; }
+.stagger > *:nth-child(8) { animation-delay: 0.37s; }
+
+/* Faint grid, the texture of a control room. Purely atmospheric, kept subtle
+   enough that it never competes with data. */
+.gridlines {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-ink-600) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-ink-600) 22%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.glow-shortage { filter: drop-shadow(0 0 6px color-mix(in oklab, var(--color-shortage) 70%, transparent)); }
+.glow-expiry { filter: drop-shadow(0 0 6px color-mix(in oklab, var(--color-expiry) 70%, transparent)); }
+.glow-flow { filter: drop-shadow(0 0 5px color-mix(in oklab, var(--color-flow) 70%, transparent)); }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-ink-900); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-700);
+  border-radius: 6px;
+  border: 2px solid var(--color-ink-900);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink-600); }
+
+/* Anyone who has asked not to be moved should not be. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
