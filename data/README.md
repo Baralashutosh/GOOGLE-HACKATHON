@@ -32,7 +32,7 @@ mechanisms that are documented reality in public health supply chains:
 3. **Deliveries arrive already part-way through shelf life** (20 to 80% remaining), so
    stock that was never going to be consumed in time arrives pre-doomed.
 
-Hemispheres are modelled explicitly. India's malaria peak (Jul, Aug) lands in Brazil's
+Hemispheres are modelled explicitly. India's malaria peak (July and August) lands in Brazil's
 and South Africa's trough, and vice versa, which is the arithmetic case for pooling
 across BRICS rather than a rhetorical one.
 
@@ -61,7 +61,7 @@ Further context used in the pitch, not in calibration:
   publicly purchased medicines wasted.
 - **India**: ~52% of essential medicines available in >80% of primary facilities.
 - **WHO GHO 2010 to 2019**: facilities with core essential medicines available ranged
-  8%, 41% across low and lower-middle income countries.
+  8% to 41% across low and lower-middle income countries.
 
 ## Files
 
@@ -69,7 +69,7 @@ Further context used in the pitch, not in calibration:
 |---|---|---|
 | `catalog/drugs.json` | yes | 15 essential medicines, ATC-keyed |
 | `catalog/countries.json` | yes | Country config: locales, admin tiers, national LMIS |
-| `generated/facilities.json` | yes | 78 facilities across 3 countries |
+| `generated/facilities.json` | yes | 99 facilities across 9 districts, 3 countries |
 | `generated/stock_batches.csv` | yes | Current on-hand batches with expiry |
 | `generated/calibration.json` | yes | Self-check output, the honesty receipt |
-| `generated/consumption.csv` | no | ~470k rows, ~14 MB. Regenerate; it is deterministic. |
+| `generated/consumption.csv` | no | ~561k rows, ~20 MB. Regenerate; it is deterministic. |

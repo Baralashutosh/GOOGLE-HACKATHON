@@ -13,9 +13,9 @@
       "row": 2,
       "drugId": "d_asv",
       "writtenName": "Polyvalent Anti-Snake Venom",
-      "batchNo": "G58158",
-      "expiry": "2027-10",
-      "balance": 2853
+      "batchNo": "G27962",
+      "expiry": "2027-03",
+      "balance": 342
     },
     {
       "row": 3,
@@ -37,81 +37,81 @@
       "row": 5,
       "drugId": "d_ceftriaxone",
       "writtenName": "Ceftriaxone 1g Injection",
-      "batchNo": "E38901",
-      "expiry": "2027-10",
-      "balance": 153
+      "batchNo": "H78999",
+      "expiry": "2027-04",
+      "balance": 0
     },
     {
       "row": 6,
       "drugId": "d_ors",
       "writtenName": "ORS Sachet",
-      "batchNo": "F53147",
-      "expiry": "2027-10",
-      "balance": 3189
+      "batchNo": "H85137",
+      "expiry": "2027-04",
+      "balance": 502
     },
     {
       "row": 7,
       "drugId": "d_magnesium_sulfate",
       "writtenName": "Magnesium Sulphate Injection",
-      "batchNo": "A48485",
-      "expiry": "2027-03",
-      "balance": 1737
+      "batchNo": "G41257",
+      "expiry": "2027-04",
+      "balance": 1068
     },
     {
       "row": 8,
       "drugId": "d_iron_folic",
       "writtenName": "IFA Tablet",
-      "batchNo": "C79288",
-      "expiry": "2027-02",
-      "balance": 312
+      "batchNo": "D74725",
+      "expiry": "2028-04",
+      "balance": 841
     },
     {
       "row": 9,
       "drugId": "d_al_fdc",
       "writtenName": "Artemether-Lumefantrine FDC",
-      "batchNo": "A54719",
-      "expiry": "2026-10",
-      "balance": 4330
+      "batchNo": "F16688",
+      "expiry": "2028-04",
+      "balance": 675
     },
     {
       "row": 10,
       "drugId": "d_amlodipine",
       "writtenName": "Amlodipine 5mg",
-      "batchNo": "A21272",
-      "expiry": "2026-12",
-      "balance": 0
+      "batchNo": "G19516",
+      "expiry": "2026-08",
+      "balance": 2031
     },
     {
       "row": 11,
       "drugId": "d_amoxicillin",
       "writtenName": "Amoxicillin 500mg",
-      "batchNo": "H89997",
+      "batchNo": "F18579",
       "expiry": "2028-01",
-      "balance": 168
+      "balance": 0
     },
     {
       "row": 12,
       "drugId": "d_metformin",
       "writtenName": "Metformin 500mg",
-      "batchNo": "G68260",
-      "expiry": "2027-12",
-      "balance": 0
+      "batchNo": "G51215",
+      "expiry": "2027-01",
+      "balance": 927
     },
     {
       "row": 13,
       "drugId": "d_measles_rubella",
       "writtenName": "MR Vaccine",
-      "batchNo": "D74183",
-      "expiry": "2027-02",
-      "balance": 3998
+      "batchNo": "A17938",
+      "expiry": "2027-06",
+      "balance": 477
     },
     {
       "row": 14,
       "drugId": "d_rhz_fdc",
       "writtenName": "RH FDC (TB)",
-      "batchNo": "G11802",
-      "expiry": "2027-01",
-      "balance": 0
+      "batchNo": "C38246",
+      "expiry": "2027-12",
+      "balance": 657
     }
   ]
 }

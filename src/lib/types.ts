@@ -29,6 +29,14 @@ export interface Country {
   admin2Label: string;
   /** National name for the primary-care unit, shown in UI. e.g. "PHC", "UBS". */
   primaryCareLabel: string;
+  /**
+   * The national logistics system MedMesh sits beside. Naming it matters: the
+   * pitch is that this is the module they are missing, not a replacement, and
+   * a ministry reads those two things very differently.
+   */
+  lmisName?: string;
+  /** One published finding about this country's stock position. */
+  note?: string;
 }
 
 export interface Facility {

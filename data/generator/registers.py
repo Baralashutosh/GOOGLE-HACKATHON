@@ -184,7 +184,7 @@ def build_page(code: str, drugs: list[dict], rng: random.Random):
         jitter_text(d, (COL_X[2] + 4, y), batch, f_hand_sm, rng)
         jitter_text(d, (COL_X[3] + 4, y), expiry.strftime("%m/%y"), f_hand_sm, rng)
         jitter_text(d, (COL_X[4] + 8, y), str(opening), f_hand_sm, rng)
-        jitter_text(d, (COL_X[5] + 8, y), str(recd) if recd else ", ", f_hand_sm, rng)
+        jitter_text(d, (COL_X[5] + 8, y), str(recd) if recd else "Nil", f_hand_sm, rng)
         jitter_text(d, (COL_X[6] + 8, y), str(issued), f_hand_sm, rng)
         jitter_text(d, (COL_X[7] + 8, y), str(balance), f_hand_sm, rng)
 
@@ -265,8 +265,71 @@ def main() -> None:
                       "truth": f"/samples/{name}.truth.json", "rows": len(truth)})
         print(f"  {name}.jpg  ({len(truth)} rows)  {FORMS[code]['place']}")
 
+    build_damaged()
+    index.append({"country": "IN", "image": "/samples/register_in_damaged.jpg",
+                  "truth": "/samples/register_in_damaged.truth.json",
+                  "rows": 14, "damaged": True})
+
     (OUT / "index.json").write_text(json.dumps(index, indent=2), encoding="utf-8")
     print(f"\nwrote {len(index)} registers to public/samples/")
+
+
+
+
+def degrade(img: Image.Image, rng: random.Random) -> Image.Image:
+    """
+    Wreck a page the way a real one gets wrecked.
+
+    Every sample so far comes back at 100% confidence, which makes the review
+    threshold look like decoration. It is not: the point of the confidence gate
+    is that the system knows when it cannot read something and hands that row to
+    a human rather than shipping medicine on a guess. To show the gate working,
+    there has to be a page it genuinely struggles with.
+
+    Damp, ink bleed, a mug ring and a crease. Nothing exotic, just a register
+    that has lived in a clinic for a year.
+    """
+    d = ImageDraw.Draw(img, "RGBA")
+
+    # Tea ring, the universal punctuation of a working register.
+    cx, cy, r = rng.randint(700, 1100), rng.randint(500, 900), rng.randint(110, 150)
+    for i in range(4):
+        d.ellipse([cx - r + i * 3, cy - r + i * 3, cx + r - i * 3, cy + r - i * 3],
+                  outline=(past := (150, 110, 60, 40 + i * 12)), width=6)
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(160, 120, 70, 26))
+
+    # Damp patches that bleed the ink into the paper.
+    for _ in range(3):
+        bx, by = rng.randint(80, 1200), rng.randint(300, 1200)
+        bw, bh = rng.randint(150, 320), rng.randint(70, 160)
+        d.ellipse([bx, by, bx + bw, by + bh], fill=(120, 130, 150, 30))
+
+    # A hard crease down the page.
+    fold = rng.randint(500, 900)
+    d.line([(fold, 0), (fold + rng.randint(-20, 20), H)], fill=(90, 90, 100, 55), width=3)
+
+    # Smudge a few cells outright so those digits are genuinely ambiguous.
+    for _ in range(5):
+        sx, sy = rng.randint(850, 1400), rng.randint(280, 1300)
+        d.ellipse([sx, sy, sx + rng.randint(50, 90), sy + rng.randint(22, 34)],
+                  fill=(70, 75, 105, 120))
+
+    img = img.filter(ImageFilter.GaussianBlur(1.5))
+    return img
+
+
+def build_damaged() -> None:
+    """Emit a degraded Indian register alongside the clean set."""
+    rng = random.Random(SEED + 7)
+    drugs = json.loads((CATALOG / "drugs.json").read_text(encoding="utf-8"))
+    img, truth = build_page("IN", drugs, rng)
+    img = degrade(img, rng)
+    img = photograph(img, rng)
+    img.save(OUT / "register_in_damaged.jpg", quality=52, optimize=True)
+    (OUT / "register_in_damaged.truth.json").write_text(
+        json.dumps({"country": "IN", "damaged": True, "rows": truth},
+                   indent=2, ensure_ascii=False), encoding="utf-8")
+    print("  register_in_damaged.jpg  (14 rows, degraded)")
 
 
 if __name__ == "__main__":

@@ -3,115 +3,115 @@
   "rows": [
     {
       "row": 1,
-      "drugId": "d_metformin",
-      "writtenName": "Metformin 500mg",
-      "batchNo": "H67861",
-      "expiry": "2027-09",
-      "balance": 163
+      "drugId": "d_iron_folic",
+      "writtenName": "Ferrous Sulphate + Folic Acid",
+      "batchNo": "F97957",
+      "expiry": "2026-11",
+      "balance": 759
     },
     {
       "row": 2,
-      "drugId": "d_magnesium_sulfate",
-      "writtenName": "Magnesium Sulphate",
-      "batchNo": "B47103",
-      "expiry": "2028-01",
-      "balance": 0
+      "drugId": "d_salbutamol",
+      "writtenName": "Salbutamol Inhaler",
+      "batchNo": "C89524",
+      "expiry": "2027-10",
+      "balance": 3982
     },
     {
       "row": 3,
       "drugId": "d_amlodipine",
       "writtenName": "Amlodipine 5mg",
-      "batchNo": "H73553",
-      "expiry": "2027-01",
-      "balance": 3101
+      "batchNo": "G21338",
+      "expiry": "2027-05",
+      "balance": 1606
     },
     {
       "row": 4,
-      "drugId": "d_rhz_fdc",
-      "writtenName": "RH FDC (TB)",
-      "batchNo": "E84630",
-      "expiry": "2027-08",
-      "balance": 700
+      "drugId": "d_oxytocin",
+      "writtenName": "Oxytocin 10IU",
+      "batchNo": "D87403",
+      "expiry": "2027-02",
+      "balance": 1270
     },
     {
       "row": 5,
-      "drugId": "d_al_fdc",
-      "writtenName": "Artemether-Lumefantrine (Coartem)",
-      "batchNo": "H69656",
-      "expiry": "2027-10",
-      "balance": 3619
+      "drugId": "d_ceftriaxone",
+      "writtenName": "Ceftriaxone 1g IV",
+      "batchNo": "G68691",
+      "expiry": "2027-12",
+      "balance": 213
     },
     {
       "row": 6,
-      "drugId": "d_amoxicillin",
-      "writtenName": "Amoxicillin 500mg",
-      "batchNo": "H47122",
-      "expiry": "2028-03",
-      "balance": 1553
+      "drugId": "d_insulin",
+      "writtenName": "Human Insulin (Soluble)",
+      "batchNo": "D55394",
+      "expiry": "2026-09",
+      "balance": 1862
     },
     {
       "row": 7,
-      "drugId": "d_oxytocin",
-      "writtenName": "Oxytocin 10IU",
-      "batchNo": "C70345",
-      "expiry": "2027-06",
-      "balance": 2215
-    },
-    {
-      "row": 8,
-      "drugId": "d_insulin",
-      "writtenName": "Human Insulin (Soluble)",
-      "batchNo": "B43893",
-      "expiry": "2027-11",
-      "balance": 1355
-    },
-    {
-      "row": 9,
-      "drugId": "d_iron_folic",
-      "writtenName": "Ferrous Sulphate + Folic Acid",
-      "batchNo": "E77217",
-      "expiry": "2028-03",
-      "balance": 866
-    },
-    {
-      "row": 10,
-      "drugId": "d_asv",
-      "writtenName": "Polyvalent Snake Antivenom",
-      "batchNo": "F10727",
-      "expiry": "2027-10",
-      "balance": 107
-    },
-    {
-      "row": 11,
-      "drugId": "d_paracetamol",
-      "writtenName": "Paracetamol 500mg",
-      "batchNo": "A28951",
-      "expiry": "2027-01",
-      "balance": 1842
-    },
-    {
-      "row": 12,
-      "drugId": "d_salbutamol",
-      "writtenName": "Salbutamol Inhaler",
-      "batchNo": "F77576",
-      "expiry": "2028-02",
+      "drugId": "d_amoxicillin",
+      "writtenName": "Amoxicillin 500mg",
+      "batchNo": "A34667",
+      "expiry": "2027-04",
       "balance": 0
     },
     {
-      "row": 13,
+      "row": 8,
+      "drugId": "d_magnesium_sulfate",
+      "writtenName": "Magnesium Sulphate",
+      "batchNo": "C54565",
+      "expiry": "2026-07",
+      "balance": 2090
+    },
+    {
+      "row": 9,
+      "drugId": "d_asv",
+      "writtenName": "Polyvalent Snake Antivenom",
+      "batchNo": "G20894",
+      "expiry": "2026-08",
+      "balance": 3243
+    },
+    {
+      "row": 10,
+      "drugId": "d_rhz_fdc",
+      "writtenName": "RH FDC (TB)",
+      "batchNo": "B64699",
+      "expiry": "2028-02",
+      "balance": 575
+    },
+    {
+      "row": 11,
       "drugId": "d_ors",
       "writtenName": "Oral Rehydration Solution",
-      "batchNo": "A40602",
-      "expiry": "2027-04",
-      "balance": 4949
+      "batchNo": "A46488",
+      "expiry": "2028-03",
+      "balance": 2974
+    },
+    {
+      "row": 12,
+      "drugId": "d_measles_rubella",
+      "writtenName": "Measles-Rubella Vaccine",
+      "batchNo": "E32526",
+      "expiry": "2027-03",
+      "balance": 2152
+    },
+    {
+      "row": 13,
+      "drugId": "d_al_fdc",
+      "writtenName": "Artemether-Lumefantrine (Coartem)",
+      "batchNo": "A81953",
+      "expiry": "2026-11",
+      "balance": 252
     },
     {
       "row": 14,
-      "drugId": "d_measles_rubella",
-      "writtenName": "Measles-Rubella Vaccine",
-      "batchNo": "C26395",
-      "expiry": "2027-10",
-      "balance": 4634
+      "drugId": "d_metformin",
+      "writtenName": "Metformin 500mg",
+      "batchNo": "E38215",
+      "expiry": "2027-09",
+      "balance": 2245
     }
   ]
 }

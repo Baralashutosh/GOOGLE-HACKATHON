@@ -16,5 +16,12 @@
     "image": "/samples/register_za.jpg",
     "truth": "/samples/register_za.truth.json",
     "rows": 14
+  },
+  {
+    "country": "IN",
+    "image": "/samples/register_in_damaged.jpg",
+    "truth": "/samples/register_in_damaged.truth.json",
+    "rows": 14,
+    "damaged": true
   }
 ]

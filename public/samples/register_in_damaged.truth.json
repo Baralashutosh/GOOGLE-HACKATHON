@@ -1,0 +1,118 @@
+{
+  "country": "IN",
+  "damaged": true,
+  "rows": [
+    {
+      "row": 1,
+      "drugId": "d_paracetamol",
+      "writtenName": "Paracetamol 500mg",
+      "batchNo": "B45631",
+      "expiry": "2027-12",
+      "balance": 4622
+    },
+    {
+      "row": 2,
+      "drugId": "d_salbutamol",
+      "writtenName": "Salbutamol Inhaler 100mcg",
+      "batchNo": "A61994",
+      "expiry": "2026-07",
+      "balance": 678
+    },
+    {
+      "row": 3,
+      "drugId": "d_asv",
+      "writtenName": "Polyvalent Anti-Snake Venom",
+      "batchNo": "B36344",
+      "expiry": "2026-07",
+      "balance": 4040
+    },
+    {
+      "row": 4,
+      "drugId": "d_iron_folic",
+      "writtenName": "IFA Tablet",
+      "batchNo": "E86524",
+      "expiry": "2027-09",
+      "balance": 658
+    },
+    {
+      "row": 5,
+      "drugId": "d_magnesium_sulfate",
+      "writtenName": "Magnesium Sulphate Injection",
+      "batchNo": "B32992",
+      "expiry": "2027-12",
+      "balance": 273
+    },
+    {
+      "row": 6,
+      "drugId": "d_amlodipine",
+      "writtenName": "Amlodipine 5mg",
+      "batchNo": "A16175",
+      "expiry": "2027-01",
+      "balance": 923
+    },
+    {
+      "row": 7,
+      "drugId": "d_ors",
+      "writtenName": "ORS Sachet",
+      "batchNo": "B25989",
+      "expiry": "2027-03",
+      "balance": 1596
+    },
+    {
+      "row": 8,
+      "drugId": "d_al_fdc",
+      "writtenName": "Artemether-Lumefantrine FDC",
+      "batchNo": "A87605",
+      "expiry": "2027-12",
+      "balance": 1232
+    },
+    {
+      "row": 9,
+      "drugId": "d_rhz_fdc",
+      "writtenName": "RH FDC (TB)",
+      "batchNo": "A45555",
+      "expiry": "2028-03",
+      "balance": 0
+    },
+    {
+      "row": 10,
+      "drugId": "d_insulin",
+      "writtenName": "Human Insulin 40IU/ml",
+      "batchNo": "E41232",
+      "expiry": "2026-09",
+      "balance": 0
+    },
+    {
+      "row": 11,
+      "drugId": "d_measles_rubella",
+      "writtenName": "MR Vaccine",
+      "batchNo": "E15773",
+      "expiry": "2028-01",
+      "balance": 3374
+    },
+    {
+      "row": 12,
+      "drugId": "d_oxytocin",
+      "writtenName": "Oxytocin 10IU Injection",
+      "batchNo": "B51736",
+      "expiry": "2027-06",
+      "balance": 1542
+    },
+    {
+      "row": 13,
+      "drugId": "d_amoxicillin",
+      "writtenName": "Amoxicillin 500mg",
+      "batchNo": "C30113",
+      "expiry": "2028-02",
+      "balance": 834
+    },
+    {
+      "row": 14,
+      "drugId": "d_ceftriaxone",
+      "writtenName": "Ceftriaxone 1g Injection",
+      "batchNo": "H57339",
+      "expiry": "2028-04",
+      "balance": 2448
+    }
+  ]
+}
