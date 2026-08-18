@@ -59,7 +59,7 @@ export function CapturePanel({ drugs }: { drugs: Drug[] }) {
     }
   }
 
-  async function useSample(path: string) {
+  async function scanSample(path: string) {
     setBusy(true);
     try {
       const blob = await (await fetch(path)).blob();
@@ -85,7 +85,7 @@ export function CapturePanel({ drugs }: { drugs: Drug[] }) {
             {SAMPLES.map((s) => (
               <button
                 key={s.code}
-                onClick={() => useSample(s.file)}
+                onClick={() => scanSample(s.file)}
                 disabled={busy}
                 className="panel panel-hover flex w-full items-center gap-3 p-3 text-left disabled:opacity-50"
               >

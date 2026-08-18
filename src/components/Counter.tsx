@@ -8,6 +8,11 @@ import { useEffect, useRef, useState } from 'react';
  * Counting is not decoration here. These figures are the whole claim, and a
  * number that arrives instantly reads as a label, while one that climbs reads
  * as a measurement. It settles on the exact value, never an approximation.
+ *
+ * Seeded with the real figure so the server-rendered HTML carries the number.
+ * A page that ships "0" is wrong in every screenshot, in every crawler, and for
+ * anyone whose JavaScript has not arrived. The animation is an enhancement on
+ * top of a correct page, not the only way to see the value.
  */
 export function Counter({
   to,
@@ -23,48 +28,50 @@ export function Counter({
   className?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  /* Seed with the real figure so the server-rendered HTML carries the number.
-     A page that ships "0" is wrong in every screenshot, in every crawler, and
-     for anyone whose JavaScript has not arrived yet. The animation is an
-     enhancement on top of a correct page, not the only way to see the value. */
   const [value, setValue] = useState(to);
-  const [started, setStarted] = useState(false);
+
+  /* A ref, not state: nothing renders from it, and writing state straight into
+     an effect body is both a lint error and a wasted render. */
+  const started = useRef(false);
 
   useEffect(() => {
     const node = ref.current;
-    if (!node || started) return;
+    if (!node || started.current) return;
 
-    /* Respect a reduced-motion preference by simply showing the answer. */
+    /* Anyone who asked not to be moved simply keeps the seeded value. */
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setStarted(true);
+      started.current = true;
       return;
     }
 
-    setValue(0);
-
+    let frame = 0;
     const observer = new IntersectionObserver(
       (entries) => {
-        if (!entries[0].isIntersecting) return;
-        setStarted(true);
+        if (!entries[0].isIntersecting || started.current) return;
+        started.current = true;
         observer.disconnect();
 
-        const start = performance.now();
+        const begin = performance.now();
         const tick = (now: number) => {
-          const t = Math.min(1, (now - start) / durationMs);
+          const t = Math.min(1, (now - begin) / durationMs);
           /* Ease out: fast at first, settling rather than stopping dead. */
           const eased = 1 - (1 - t) ** 3;
           setValue(Math.round(to * eased));
-          if (t < 1) requestAnimationFrame(tick);
-          else setValue(to);
+          if (t < 1) frame = requestAnimationFrame(tick);
         };
-        requestAnimationFrame(tick);
+        /* The first frame lands near zero on its own, so there is no need to
+           blank the value first and no flash of an empty figure. */
+        frame = requestAnimationFrame(tick);
       },
       { threshold: 0.35 },
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
-  }, [to, durationMs, started]);
+    return () => {
+      observer.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [to, durationMs]);
 
   return (
     <span ref={ref} className={className}>
