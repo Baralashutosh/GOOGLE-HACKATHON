@@ -366,9 +366,9 @@ function card(s, { x, y, w, h = 1.6, value, label, note, color = TEAL }) {
     ['02', 'Run both clocks at once',
       'Days until it runs out and days until it expires, projected together over the same stock in one first-expiry-first-out simulation. Season-aware, because season-blind ordering is the failure being corrected.',
       'Seasonal forecast'],
-    ['03', 'Propose the move, and the reason',
-      'Surplus matched to shortage on distance, urgency and remaining shelf life, then written up as one sentence an officer can approve. Nothing executes on its own.',
-      'A human always approves'],
+    ['03', 'Move it, and say why',
+      'A committed count re-runs both clocks and re-runs the matcher across the district. One photographed page moved 13 medicines between states and created 11 transfers that did not exist a moment before. Gemini writes the justification; a human approves.',
+      'Paper to transfer, one request'],
   ];
 
   steps.forEach(([n, title, body, badge], i) => {
@@ -484,10 +484,11 @@ function card(s, { x, y, w, h = 1.6, value, label, note, color = TEAL }) {
     });
 
   s.addText(
-    'Waste averted counts only units the projection says would have expired unused. Stock merely '
-    + 'moved somewhere more useful is not counted, which makes the number smaller and defensible.',
+    'End to end, live: photographing one register page moves 13 medicines between states and '
+    + 'creates 11 transfers that did not exist seconds earlier. Waste averted counts only units '
+    + 'that would genuinely have expired, keeping the number smaller and defensible.',
     {
-      x: L, y: 5.92, w: W, h: 0.5,
+      x: L, y: 5.88, w: W, h: 0.62,
       fontFace: BODY, fontSize: 11.5, color: MUTED, margin: 0,
     });
 
