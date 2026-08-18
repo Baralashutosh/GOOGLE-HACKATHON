@@ -56,10 +56,26 @@ console.log(`  ${facilities.length} facilities, ${drugs.length} drugs, ${history
 
 console.log('forecasting and projecting...');
 const positions: Position[] = [];
+/**
+ * Fitted forecast parameters, kept so the running app can re-project a facility
+ * the moment a pharmacist photographs a register. The raw 18-month series is
+ * 20MB and never ships; the level plus the seasonal shape is 25 numbers and
+ * reproduces the same projection.
+ */
+const forecastParams: { facilityId: string; drugId: string; level: number; seasonalIndex: number[] }[] = [];
+
 for (const [k, history] of historyByPair) {
   const [facilityId, drugId] = k.split('|');
   const batches = batchesByPair.get(k) ?? [];
   const forecast = fitForecast(history, AS_OF);
+  forecastParams.push({
+    facilityId,
+    drugId,
+    level: Number(forecast.level.toFixed(4)),
+    // Three decimals is well below the noise floor of the underlying counts
+    // and keeps the shipped file a third of the size.
+    seasonalIndex: forecast.seasonalIndex.map((v) => Number(v.toFixed(3))),
+  });
   const assessment = assessRisk(facilityId, drugId, batches, forecast, AS_OF);
   const { expiringLots } = project(batches, forecast, AS_OF);
   positions.push({ assessment, expiringLots, batches });
@@ -181,6 +197,10 @@ writeFileSync(join(GEN, 'mesh_output.json'), JSON.stringify({
   // Every facility-drug position, so the console can show the state of the
   // network and not just the transfers that came out of it.
   assessments: positions.map((p) => p.assessment),
+  forecastParams,
+  // Batches ship too: committing a stock count has to merge against what the
+  // facility already holds, not replace it blindly.
+  batches: Object.fromEntries([...batchesByPair].map(([k, v]) => [k, v])),
 }, null, 2));
 console.log('\nwrote data/generated/mesh_output.json');
 

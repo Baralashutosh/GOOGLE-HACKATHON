@@ -117,13 +117,28 @@ export function fitForecast(history: ConsumptionPoint[], asOf: string): Forecast
 }
 
 /**
- * Run both clocks forward over the same batches, FEFO, and report where they land.
+ * Rebuild a forecast from its fitted parameters.
  *
- * Running them in ONE simulation is the point. Ask "when do I run out?" and
- * "what will I waste?" separately and you get two numbers that quietly
- * contradict each other; ask them together and you get the truth, which is that
- * a facility can be days from empty and still holding stock it will never use.
+ * The pipeline fits these offline against 18 months of history. That history is
+ * 20MB and never ships, but a live stock update still has to project forward
+ * from somewhere. Persisting the level and the seasonal shape, which together
+ * are 25 numbers per facility-medicine, means the server can re-project the
+ * moment a pharmacist photographs a register, without the raw series.
  */
+export function forecastFromParams(level: number, seasonalIndex: number[]): Forecast {
+  const idx = seasonalIndex.length === BUCKETS ? seasonalIndex : new Array(BUCKETS).fill(1);
+  return {
+    level,
+    seasonalIndex: idx,
+    demandOn: (dayNumber: number) => Math.max(0, level * (idx[bucketOf(dayNumber)] || 1)),
+  };
+}
+
+/** Days since epoch for an ISO date, exported so callers can share the frame. */
+export function dayNumber(iso: string): number {
+  return toDay(iso);
+}
+
 export interface ExpiringLot {
   batchNo: string;
   /** Units of this specific lot projected to die unused. */

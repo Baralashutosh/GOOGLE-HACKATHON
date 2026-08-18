@@ -134,6 +134,14 @@ body {
   border: 1px solid transparent;
   white-space: nowrap;
 }
+
+/* Status pills are short and must never wrap. A pill used as a banner carries
+   a whole sentence and has to, or it runs off a narrow screen. */
+.pill-wrap {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.35;
+}
 .pill[data-state="stocked_out"] {
   color: var(--color-shortage);
   background: color-mix(in oklab, var(--color-shortage) 14%, transparent);

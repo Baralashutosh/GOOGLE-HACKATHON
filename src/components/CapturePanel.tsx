@@ -1,7 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import type { CapturedStockRow, Drug } from '@/lib/types';
+import type { CapturedStockRow, Drug, Facility } from '@/lib/types';
+import { CommitPanel } from './CommitPanel';
 
 /**
  * The last mile, demonstrated.
@@ -29,7 +30,7 @@ const SAMPLES = [
   { code: 'IN', label: 'Damaged page', file: '/samples/register_in_damaged.jpg', sub: 'Water damage, tea ring, crease, heavy blur' },
 ];
 
-export function CapturePanel({ drugs }: { drugs: Drug[] }) {
+export function CapturePanel({ drugs, facilities }: { drugs: Drug[]; facilities: Facility[] }) {
   const [preview, setPreview] = useState<string | null>(null);
   const [result, setResult] = useState<ScanResult | null>(null);
   const [busy, setBusy] = useState(false);
@@ -227,6 +228,8 @@ export function CapturePanel({ drugs }: { drugs: Drug[] }) {
                 </tbody>
               </table>
             </div>
+
+            <CommitPanel rows={result.rows} facilities={facilities} source="register_photo" />
 
             <div className="mt-auto border-t rule px-4 py-3">
               <p className="text-[11px] leading-relaxed text-ink-400">

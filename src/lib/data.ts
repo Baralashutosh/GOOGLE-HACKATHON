@@ -11,8 +11,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type {
-  Country, Drug, Facility, RiskAssessment, TransferProposal,
+  Country, Drug, Facility, RiskAssessment, StockBatch, TransferProposal,
 } from './types';
+import { forecastFromParams, project, assessRisk, type Forecast } from './forecast';
+import type { Position } from './match';
 
 export interface BricsOpportunity {
   drugId: string;
@@ -33,12 +35,22 @@ export interface MeshSummary {
   positionTally: Record<string, number>;
 }
 
+export interface ForecastParams {
+  facilityId: string;
+  drugId: string;
+  level: number;
+  seasonalIndex: number[];
+}
+
 export interface Mesh {
   asOf: string;
   summary: MeshSummary;
   bricsPooling: BricsOpportunity[];
   proposals: TransferProposal[];
   assessments: RiskAssessment[];
+  forecastParams: ForecastParams[];
+  /** Keyed `facilityId|drugId`. */
+  batches: Record<string, StockBatch[]>;
 }
 
 const DATA = join(process.cwd(), 'data');
@@ -128,4 +140,70 @@ export function globalStats() {
     countries: new Set(facilities.map((f) => f.country)).size,
     brics: mesh.bricsPooling,
   };
+}
+
+
+/* ------------------------------------------------------------------ */
+/* Live re-projection                                                  */
+/* ------------------------------------------------------------------ */
+
+export const pairKey = (facilityId: string, drugId: string) => `${facilityId}|${drugId}`;
+
+let forecastCache: Map<string, Forecast> | null = null;
+
+/**
+ * Rebuild every fitted forecast from its stored parameters.
+ *
+ * The 18-month consumption series is 20MB and never ships. The level and
+ * seasonal shape do, and they reproduce the same projection, which is what lets
+ * a stock count committed from a phone re-project the facility immediately
+ * rather than waiting for the next nightly batch.
+ */
+export function forecasts(): Map<string, Forecast> {
+  if (!forecastCache) {
+    forecastCache = new Map(
+      load().mesh.forecastParams.map((f) => [
+        pairKey(f.facilityId, f.drugId),
+        forecastFromParams(f.level, f.seasonalIndex),
+      ]));
+  }
+  return forecastCache;
+}
+
+let positionCache: Position[] | null = null;
+
+/** Every facility-medicine position, reconstructed for the matcher. */
+export function positions(): Position[] {
+  if (!positionCache) {
+    const { mesh } = load();
+    const fc = forecasts();
+    positionCache = mesh.assessments.map((assessment) => {
+      const k = pairKey(assessment.facilityId, assessment.drugId);
+      const batches = mesh.batches[k] ?? [];
+      const forecast = fc.get(k);
+      const expiringLots = forecast
+        ? project(batches, forecast, mesh.asOf).expiringLots
+        : [];
+      return { assessment, expiringLots, batches };
+    });
+  }
+  return positionCache;
+}
+
+/**
+ * Recompute one facility-medicine position from a fresh stock count.
+ *
+ * A register page is a full recount of the medicines it lists, so the reported
+ * batches replace what we held for that medicine rather than adding to it.
+ * Adding would double-count every month a facility reports.
+ */
+export function reprojectPair(
+  facilityId: string, drugId: string, batches: StockBatch[],
+): Position | null {
+  const { mesh } = load();
+  const forecast = forecasts().get(pairKey(facilityId, drugId));
+  if (!forecast) return null;
+  const assessment = assessRisk(facilityId, drugId, batches, forecast, mesh.asOf);
+  const { expiringLots } = project(batches, forecast, mesh.asOf);
+  return { assessment, expiringLots, batches };
 }

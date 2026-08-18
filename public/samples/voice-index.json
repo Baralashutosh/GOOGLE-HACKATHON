@@ -1,0 +1,8 @@
+[
+  {
+    "id": "voice_hi",
+    "label": "Hindi, mixed with English drug names",
+    "language": "Hindi",
+    "file": "/samples/voice_hi.wav"
+  }
+]

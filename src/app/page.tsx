@@ -47,7 +47,7 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-7xl px-5 pt-16 pb-20">
           <div className="stagger max-w-3xl">
-            <span className="pill" data-state="flow">
+            <span className="pill pill-wrap" data-state="flow">
               Track 03, Smart Health and Supply Chain Resilience
             </span>
 

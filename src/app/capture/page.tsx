@@ -1,4 +1,4 @@
-import { getDrugs } from '@/lib/data';
+import { getDrugs, load } from '@/lib/data';
 import { CapturePanel } from '@/components/CapturePanel';
 import { VoicePanel } from '@/components/VoicePanel';
 
@@ -8,6 +8,7 @@ export const metadata = {
 
 export default function CapturePage() {
   const drugs = getDrugs();
+  const facilities = load().facilities;
 
   return (
     <div className="mx-auto max-w-[1500px] px-5 py-8">
@@ -31,7 +32,7 @@ export default function CapturePage() {
         </p>
       </header>
 
-      <CapturePanel drugs={drugs} />
+      <CapturePanel drugs={drugs} facilities={facilities} />
 
       <div className="mt-4">
         <VoicePanel drugs={drugs} />

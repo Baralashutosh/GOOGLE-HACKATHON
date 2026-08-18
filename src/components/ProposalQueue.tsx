@@ -125,7 +125,7 @@ export function ProposalQueue({
                   <div className="mt-2 flex items-center gap-2 text-[12px]">
                     <button
                       onClick={() => onSelectFacility(from.id)}
-                      className="truncate text-expiry hover:underline"
+                      className="-my-1 truncate py-1 text-expiry hover:underline"
                     >
                       {from.name}
                     </button>
@@ -135,7 +135,7 @@ export function ProposalQueue({
                     </svg>
                     <button
                       onClick={() => onSelectFacility(to.id)}
-                      className="truncate text-shortage hover:underline"
+                      className="-my-1 truncate py-1 text-shortage hover:underline"
                     >
                       {to.name}
                     </button>
@@ -199,7 +199,7 @@ export function ProposalQueue({
                       <button
                         onClick={() => explain(p.id)}
                         disabled={loading === p.id}
-                        className="ml-auto text-[12px] text-ink-400 underline underline-offset-4 transition-colors hover:text-flow disabled:opacity-50"
+                        className="-my-1 ml-auto py-1 text-[12px] text-ink-400 underline underline-offset-4 transition-colors hover:text-flow disabled:opacity-50"
                       >
                         {loading === p.id ? 'Writing...' : 'Why this transfer?'}
                       </button>
