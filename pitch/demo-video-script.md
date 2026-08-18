@@ -1,165 +1,155 @@
 # Demo video script
 
-**Target: 4:00.** The brief allows 3 to 5 minutes. Four is the sweet spot: long
-enough to show the thing working end to end, short enough that a judge watches
-all of it.
+**Target 4:30.** The brief allows 3 to 5 minutes.
 
 **The one rule:** this is a *working prototype* demo, not a pitch. 25% of the
-score is "does the prototype function end-to-end". So the screen should show the
-software doing real work for at least half the runtime, and the register scan
-must be a **live call**, not a cut to a finished result. The waiting is the
-proof.
+score is "does the prototype function end-to-end", so the screen must show the
+software doing real work for most of the runtime, and the Gemini calls must be
+**live**, not cut to a finished result. The waiting is the proof.
 
-Record at 1920x1080. Close every other tab. Set browser zoom to 100%.
+Record at 1920x1080 against **https://medmesh-google.vercel.app**. Close every
+other tab, hide the bookmarks bar, silence notifications, browser at 100% zoom.
 
 ---
 
 ## 0:00 to 0:22 · The hook
 
-**Screen:** `/` landing page, top of hero. Scroll slowly to the insulin diagram
-and stop there.
+**Screen:** `/`, top of hero. Scroll slowly to the insulin diagram and stop.
 
-> Two clinics in KwaZulu-Natal, eleven kilometres apart. One of them is about to
-> throw away four hundred and eighteen vials of insulin because they expire in
-> October. The other one has none, and will have none for the next forty-seven
-> days.
+> Two clinics in KwaZulu-Natal, eleven kilometres apart. One is about to throw
+> away four hundred and eighteen vials of insulin because they expire in
+> October. The other has none, and will have none for the next forty-seven days.
 >
-> Neither of them can see the other. That is not a supply problem. That is what
+> Neither can see the other. That is not a supply problem, and that is what
 > MedMesh fixes.
 
-**Note:** do not rush this. The insulin case is the entire product and it is the
-one thing a judge will still remember tomorrow.
+Do not rush this. It is the one thing a judge still remembers tomorrow.
 
 ---
 
-## 0:22 to 0:52 · The problem is measured, not asserted
+## 0:22 to 0:50 · Measured, not asserted
 
-**Screen:** scroll to the three evidence cards, pause on each for about 2 seconds.
+**Screen:** scroll through the three evidence cards, about 2 seconds each.
 
-> This is not an edge case. In King Cetshwayo District, eighty-five percent of
-> medicines were hit by stock-outs, while half of those same medicines were
-> overstocked and fifteen percent expired unused. One district, one year, one
-> shelf.
->
-> Eighty-two percent of Brazilian municipalities report shortages while up to a
-> fifth of what they buy is wasted.
+> In King Cetshwayo District, eighty-five percent of medicines were hit by
+> stock-outs, while half of those same medicines were overstocked and fifteen
+> percent expired unused. One district, one year, one shelf.
 
-**Screen:** scroll to the red "what should worry a ministry" panel.
+**Screen:** the red panel.
 
-> And here is the part that should worry a ministry. Community health worker
-> stock-outs went from twenty-six percent to forty-nine percent, across exactly
-> the fifteen years when logistics software was rolled out everywhere.
+> And the part that should worry a ministry: community health worker stock-outs
+> went from twenty-six percent to forty-nine percent, across exactly the fifteen
+> years when logistics software was rolled out everywhere.
 >
 > Tracking was never the bottleneck.
 
 ---
 
-## 0:52 to 1:15 · Why nobody solved it
+## 0:50 to 1:10 · Why nobody solved it
 
-**Screen:** scroll to the tree-versus-mesh diagram. Let the arc animate.
+**Screen:** the tree-versus-mesh diagram. Let the arc animate.
 
 > Every health logistics system ever built is a tree. Stock reports up to the
-> district and comes back down. There is no sideways.
+> district and comes back down. There is no sideways, so the clinic with
+> expiring stock is invisible to the clinic that ran dry.
 >
-> So a clinic forty kilometres away sitting on stock that expires next month is
-> invisible to the clinic that ran dry this morning. We are not inventing this
-> gap. The South African study says the national pharmacy system, quote, lacks a
-> redistribution module.
->
-> MedMesh is that module.
+> We are not inventing this gap. The South African study says the national
+> pharmacy system, quote, lacks a redistribution module. MedMesh is that module.
 
 ---
 
-## 1:15 to 2:10 · Live demo one, the last mile
+## 1:10 to 2:25 · Live demo one, paper to transfer
 
-**Screen:** navigate to `/capture`. Click the **India** sample register. Let it
-run. Do not cut.
+**Screen:** `/capture`. Click the **India** sample. Do not cut.
 
 > Everything so far assumes a clinic can tell us what is on its shelf. Most
-> cannot. They keep a paper register, and every system so far has asked them to
-> start typing instead. They did not, which is why national dashboards show green
-> while the shelf is empty.
+> cannot. They keep a paper register, and every system so far asked them to
+> start typing instead. They did not, which is why national dashboards show
+> green while the shelf is empty. So we read the register they already keep.
+
+**Screen:** rows appear. Point at the confidence column.
+
+> Gemini returns structured stock: medicine, batch, quantity, expiry, and an
+> honest confidence per row. Forty-two of forty-two rows correct against ground
+> truth, across Indian, Brazilian and South African registers.
+
+**Screen:** now the important part. Choose **PHC, Katra** in the selector and
+click **Commit to the mesh**. Wait for it.
+
+> But extraction on its own only proves a model can read handwriting. The claim
+> is that a clinic with no digital system can join the network by photographing
+> a page. So watch what the page does.
+
+**Screen:** the outcome panel appears.
+
+> Thirteen medicines change posture. Antivenom goes from stocked out to
+> adequate. Ceftriaxone goes the other way, critical to stocked out. And eleven
+> transfers now exist that did not exist ten seconds ago.
 >
-> So we read the register they already keep. This is a photograph of a filled
-> paper form, shot at an angle under bad light.
+> Look at the third one. Katra is *sending* magnesium sulfate to Kurhani. A
+> fresh count can make you a donor, not just a recipient, which is why the
+> matcher re-runs across the whole district and not just this clinic.
 
-**Screen:** the rows appear. Point at the confidence column, then the matched
-medicine column.
+**Screen:** scroll to the voice panel, click **Play a Hindi report**.
 
-> Gemini reads the handwriting and returns structured stock: medicine, batch,
-> quantity, expiry, and an honest confidence per row. Anything below threshold
-> goes to a human instead of into stock.
->
-> Against ground truth, forty-two of forty-two rows across Indian, Brazilian and
-> South African registers, every field correct.
-
-**Screen:** click the **Damaged page** sample. When it returns, point at the
-amber "what the model was unsure of" panel.
-
-> This one has water damage, a tea ring and a crease. It still reads it, and it
-> tells us which name it had to infer. No new hardware, no new workflow, no
-> training.
+> And if writing is the problem, speak. This is Hindi with English drug names,
+> the way people actually talk. Same endpoint, same schema.
 
 ---
 
-## 2:10 to 3:05 · Live demo two, the mesh
+## 2:25 to 3:10 · Live demo two, the officer's morning
 
-**Screen:** navigate to `/console`. Let the map draw.
+**Screen:** `/console`. Let the map draw. Click a red facility.
 
-> This is a district officer's morning. Ninety-nine facilities, real districts in
-> Bihar, Amazonas and KwaZulu-Natal. Red is running out. Amber is expiring
-> unused. Both are failures, and until now no system showed them on one screen.
+> Ninety-nine facilities across real districts in Bihar, Amazonas and
+> KwaZulu-Natal. Red is running out. Amber is expiring unused. Both are
+> failures, and until now no system put them on one screen.
+>
+> Every medicine races two clocks: the day it runs out and the day it expires.
+> Where those clocks collide across two facilities, there is a transfer worth
+> making.
 
-**Screen:** click a red facility on the map. The queue filters, arcs highlight.
-
-> Every medicine is racing two clocks: the day it runs out and the day it
-> expires. Where those clocks collide across two facilities, there is a transfer
-> worth making.
-
-**Screen:** scroll to a high-scoring proposal. Click **Why this transfer?** and
-wait for Gemini.
+**Screen:** click **Why this transfer?** on a high-scoring proposal. Wait.
 
 > Redistribution does not fail for want of arithmetic. It fails for want of a
-> signature. So Gemini writes the justification the officer actually reads,
-> using only figures the engine already computed.
+> signature. So Gemini writes the justification the officer reads, using only
+> figures the engine already computed.
 
-**Screen:** the sentence appears. Read it aloud from screen, then click
-**Approve transfer**.
+**Screen:** read the sentence aloud, then click **Approve transfer**.
 
-> One tap, and the dispatch is raised. Across this network: six hundred and
-> fourteen transfers, forty-four percent of them crossing a district boundary,
-> ninety of ninety-nine facilities helped, and thirteen and a half thousand
-> stock-out days averted.
+> Six hundred and fourteen transfers across this network, forty-four percent
+> crossing a district boundary, ninety of ninety-nine facilities helped,
+> thirteen and a half thousand stock-out days averted.
 
 ---
 
-## 3:05 to 3:30 · Cross-border
+## 3:10 to 3:45 · Cross-border
 
-**Screen:** switch country to **Brazil**, then **South Africa**. Same console,
-different network, Portuguese and Zulu facility names.
+**Screen:** switch country to **Brazil**, then **South Africa**.
 
 > The same engine, unchanged, in another country. Medicines are keyed to WHO ATC
 > codes rather than national product codes, so all three describe the same
 > molecule identically.
 
-**Screen:** back to `/` landing, scroll to the BRICS pooling section.
+**Screen:** navigate to `/brics`. Scroll to the hemisphere table, then a
+pooling card.
 
-> Which means surplus can be matched across borders. South Africa has fifty-four
-> thousand units of antimalarial that India is short of, because the malaria
-> seasons are six months out of phase.
+> Which is what makes this possible. India is northern, Brazil and South Africa
+> are southern, so for every seasonal medicine their peaks are six months apart.
+> The month India is buying antimalarials is the month South Africa is watching
+> them expire.
 >
-> That is cooperation as arithmetic, not as a slogan.
+> Fifty-four thousand units. That is cooperation as arithmetic, not as a slogan.
 
 ---
 
-## 3:30 to 4:00 · Deployability and close
+## 3:45 to 4:30 · Honesty and close
 
-**Screen:** `/method` page, scroll briefly through the calibration table and the
-"weaker than it looks" section.
+**Screen:** `/method`, scroll the calibration table and the limits section.
 
 > One thing we want to be straight about. No ministry publishes facility-level
 > stock data, so this runs on a simulation, calibrated against five published
-> measures and within tolerance on all five. The method page lists where we are
+> measures and within tolerance on all five. This page also lists where we are
 > weaker than the pitch implies, including that an outbreak is exactly what our
 > forecast would miss.
 >
@@ -171,18 +161,20 @@ different network, Portuguese and Zulu facility names.
 
 > The medicine already exists. It is in the wrong place.
 >
-> Give us one district and one quarter, and we will show you how much of it comes
-> back.
+> Give us one district and one quarter, and we will show you how much comes back.
 
 ---
 
 ## Recording checklist
 
-- [ ] `.env.local` has a working key, and both API routes tested within the last hour
-- [ ] Run each Gemini call once before recording so the model is warm
-- [ ] Browser at 100% zoom, bookmarks bar hidden, no notifications
-- [ ] Record system audio off, voice only
-- [ ] Do not cut the register scan. The wait is the credibility.
+- [ ] Run one scan, one commit, one rationale and one voice sample **before**
+      recording, so every model is warm and the takes are fast
+- [ ] Use the deployed URL, not localhost. Judges are watching the thing they
+      can click
+- [ ] Do not cut any Gemini call. The wait is the credibility
 - [ ] If a call 503s mid-take, keep rolling. It falls back to another model and
-      recovers, which is worth showing.
-- [ ] Export 1080p, under 200MB, upload unlisted to YouTube and paste that link
+      recovers, which is worth showing rather than hiding
+- [ ] The voice sample plays audio aloud. Make sure system audio is captured, or
+      say what it is saying
+- [ ] Export 1080p, upload unlisted to YouTube, paste the link into the
+      submission

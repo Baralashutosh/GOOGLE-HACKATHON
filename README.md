@@ -56,7 +56,13 @@ in Hindi, Portuguese or isiZulu. No new workflow, no new hardware, no training.
 expires, projected together over the same stock in one FEFO simulation. Ask
 those questions separately and the answers quietly contradict each other.
 
-**3. Proposes the move, and the reason.** Surplus matched to shortage on
+**3. Puts it straight into the network.** A committed count re-runs both clocks
+for that facility and re-runs the matcher across the district. Photographing one
+page moves 13 medicines between states and creates 11 transfers that did not
+exist a moment earlier, and can make a facility a *donor* as easily as a
+recipient. Paper to transfer proposal, in one request.
+
+**4. Proposes the move, and the reason.** Surplus matched to shortage on
 distance, urgency and remaining shelf life, then written up as one sentence a
 district officer can approve. Nothing executes on its own: redistribution fails
 for want of a signature far more often than for want of arithmetic.
@@ -73,6 +79,7 @@ Run over **99 facilities**, 15 essential medicines, **9 real districts**, 3 coun
 | **Stock-out days averted** | **13,552** |
 | Units of waste averted | 96,935 |
 | Register rows extracted fully correct | **42 of 42** (100%) |
+| Self-checks on the engine and the matcher | **22** |
 
 A real proposal, unedited from the run:
 
@@ -140,6 +147,12 @@ npm run test:scan   # score Gemini extraction against ground truth
 `npm run check` asserts the things that must not silently break: no cold-chain
 medicine routed to a clinic without a fridge, no batch sent that expires before
 it can arrive and be used, no lot promised to two facilities at once.
+
+It also guards medicine-name matching in both directions, and the false-positive
+half matters more. Live testing caught three real bugs there: a pharmacist saying
+just "insulin" went unmatched, while "vitamin C" matched Ceftriaxone and "tablet"
+matched an iron supplement, both at commit confidence. A missed match costs a
+human thirty seconds of review. A wrong match costs a patient the wrong medicine.
 
 ## Data honesty
 
