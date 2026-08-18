@@ -28,6 +28,7 @@ const NAV = [
   { href: "/", label: "Overview" },
   { href: "/console", label: "District console" },
   { href: "/capture", label: "Capture" },
+  { href: "/brics", label: "BRICS pooling" },
   { href: "/method", label: "Method" },
 ];
 

@@ -13,6 +13,20 @@ import type { CapturedStockRow, Drug } from '@/lib/types';
  * language into the same endpoint.
  */
 
+/**
+ * Pre-recorded reports, so the feature works with no microphone.
+ *
+ * Microphone permission is the single most fragile thing in this demo: a judge
+ * opening the deployed link may decline it, a screen recorder may hold the
+ * device, and a conference laptop may have no working input at all. These were
+ * synthesised with Gemini TTS and are read by the same endpoint as live speech,
+ * so nothing about the demonstration is faked, only the microphone is skipped.
+ */
+const SAMPLES = [
+  { id: 'voice_en', label: 'Play an English report', file: '/samples/voice_en.wav' },
+  { id: 'voice_hi', label: 'Play a Hindi report', file: '/samples/voice_hi.wav' },
+];
+
 const LANGUAGES = [
   { code: '', label: 'Detect automatically' },
   { code: 'Hindi', label: 'हिन्दी, Hindi' },
@@ -76,6 +90,22 @@ export function VoicePanel({ drugs }: { drugs: Drug[] }) {
     if (timer.current) clearInterval(timer.current);
   }
 
+  async function playSample(file: string) {
+    setError(null);
+    setResult(null);
+    setBusy(true);
+    try {
+      // Play it aloud as well as sending it: hearing the accent and the
+      // code-switching is most of the point.
+      new Audio(file).play().catch(() => { /* autoplay policy, not fatal */ });
+      const blob = await (await fetch(file)).blob();
+      await send(blob);
+    } catch {
+      setError('Could not load the sample recording.');
+      setBusy(false);
+    }
+  }
+
   async function send(blob: Blob) {
     if (blob.size === 0) {
       setError('Nothing was recorded. Hold the button while you speak.');
@@ -106,7 +136,8 @@ export function VoicePanel({ drugs }: { drugs: Drug[] }) {
             Hold the button and say what is on the shelf, in whichever language
             you think in. Try: &ldquo;Amoxicillin five hundred, batch H36223, two
             thousand three hundred and twenty four left, expires August
-            twenty twenty seven.&rdquo;
+            twenty twenty seven.&rdquo; No microphone? Play one of the recorded
+            reports instead, they go through the same endpoint.
           </p>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -128,6 +159,17 @@ export function VoicePanel({ drugs }: { drugs: Drug[] }) {
               />
               {recording ? `Recording ${seconds}s, release to send` : 'Hold to speak'}
             </button>
+
+            {SAMPLES.map((s2) => (
+              <button
+                key={s2.id}
+                onClick={() => playSample(s2.file)}
+                disabled={busy || recording}
+                className="rounded-full border border-ink-600 px-4 py-2.5 text-[12px] text-ink-200 transition-colors hover:border-flow/60 hover:text-flow disabled:opacity-50"
+              >
+                {s2.label}
+              </button>
+            ))}
 
             <select
               value={language}

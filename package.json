@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check": "tsx src/lib/forecast.check.ts && tsx src/lib/match.check.ts",
+    "check": "tsx src/lib/forecast.check.ts && tsx src/lib/match.check.ts && tsx src/lib/match-drug.check.ts",
     "data": "python data/generator/generate.py",
     "pipeline": "tsx scripts/pipeline.ts",
     "test:scan": "node --env-file=.env.local --import tsx scripts/test-scan.ts",
-    "registers": "python data/generator/registers.py"
+    "registers": "python data/generator/registers.py",
+    "voice": "node --env-file=.env.local --import tsx scripts/make-voice-samples.ts"
   },
   "dependencies": {
     "@google/genai": "^2.17.1",

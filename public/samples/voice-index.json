@@ -1,5 +1,11 @@
 [
   {
+    "id": "voice_en",
+    "label": "English, PHC pharmacist",
+    "language": "English",
+    "file": "/samples/voice_en.wav"
+  },
+  {
     "id": "voice_hi",
     "label": "Hindi, mixed with English drug names",
     "language": "Hindi",

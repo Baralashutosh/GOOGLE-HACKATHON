@@ -312,6 +312,17 @@ export function matchDrug(
   return { drugId: best.drugId, confidence: best.score };
 }
 
+/**
+ * Dosage forms, in the languages the catalogue carries.
+ *
+ * The catalogue keeps `form` as its own field because the form is not the
+ * medicine, and the matcher has to agree. Left in, a register row reading only
+ * "Tablet" scored 0.92 against "IFA Tablet" and would have committed a stock
+ * count of iron supplements on the strength of one generic noun.
+ */
+const FORM_WORDS =
+  /\b(tablets?|capsules?|injections?|inj|vials?|sachets?|inhalers?|syrups?|ampoules?|solutions?|drops?|comprimidos?|capsulas?|injecao|ampolas?|aerossol|saches?|frascos?|gotas?)\b/g;
+
 function normalise(s: string): string {
   return s
     .toLowerCase()
@@ -319,11 +330,24 @@ function normalise(s: string): string {
     .replace(/[̀-ͯ]/g, '')     // strip accents: "Ácido" -> "acido"
     .replace(/[^a-z0-9 ]/g, ' ')
     .replace(/\b\d+\s*(mg|ml|mcg|iu|g)\b/g, ' ')  // dose is not identity
+    .replace(FORM_WORDS, ' ')                    // nor is the dosage form
     .replace(/\s+/g, ' ')
     .trim();
 }
 
-/** Token overlap (Dice). Robust to word order and to trailing dosage noise. */
+/**
+ * How closely a spoken or written name matches a catalogue name.
+ *
+ * Dice alone is wrong here, and a live voice test proved it: a pharmacist who
+ * says just "insulin" scores 2x1/(1+3) = 0.5 against "Insulin (human, soluble)"
+ * and falls under the threshold, so the medicine goes unmatched. Saying the
+ * bare molecule is the most natural thing a person can do.
+ *
+ * So containment counts too. When every token of one name appears in the other,
+ * that is a strong match regardless of how many extra words the catalogue
+ * carries. It is scored just below an exact token match so a fuller name still
+ * wins when both are present.
+ */
 function similarity(a: string, b: string): number {
   if (!a || !b) return 0;
   if (a === b) return 1;
@@ -336,11 +360,21 @@ function similarity(a: string, b: string): number {
     if (tb.has(t)) shared += 1;
     // Credit near-misses so a shaky transcription still lands: "amoxicilina"
     // against "amoxicillin" should not score zero.
-    else if ([...tb].some((u) => u.length > 4 && (u.startsWith(t.slice(0, 5)) || t.startsWith(u.slice(0, 5))))) {
+    //
+    // BOTH tokens must be long enough to carry a prefix. Without the guard on
+    // the query token, the single letter in "vitamin C" prefix-matched
+    // "ceftriaxone" and scored 0.74, which is the precise failure this system
+    // must never make: a confident substitution of one medicine for another.
+    else if (t.length >= 5 && [...tb].some(
+      (u) => u.length >= 5 && (u.startsWith(t.slice(0, 5)) || t.startsWith(u.slice(0, 5))))) {
       shared += 0.8;
     }
   }
-  return (2 * shared) / (ta.size + tb.size);
+
+  const dice = (2 * shared) / (ta.size + tb.size);
+  // Containment: what fraction of the shorter name is present in the longer.
+  const coverage = shared / Math.min(ta.size, tb.size);
+  return Math.max(dice, 0.92 * coverage);
 }
 
 /**
