@@ -18,7 +18,7 @@ const REPRODUCE = [
   'npm run data        # rebuild the dataset, deterministic',
   'npm run registers   # rebuild the sample register photographs',
   'npm run pipeline    # forecast, project, match, write mesh_output.json',
-  'npm run check       # 18 self-checks on the engine',
+  'npm run check       # 22 self-checks on the engine and matching',
   'npm run test:scan   # score Gemini extraction against ground truth',
 ].join('\n');
 
